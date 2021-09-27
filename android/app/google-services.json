@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "376404751502",
+    "project_id": "car-park-app-72760",
+    "storage_bucket": "car-park-app-72760.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376404751502:android:c5f78f3d026143b42f05df",
+        "android_client_info": {
+          "package_name": "com.example.car_park_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376404751502-6ottktfi8snpctj597fsp0qrgpnr2vdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3-seGKdBuejF-tm-_SJyStJ63itYYgAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376404751502-6ottktfi8snpctj597fsp0qrgpnr2vdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
