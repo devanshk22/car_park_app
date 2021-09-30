@@ -1,5 +1,11 @@
 extension StringExt on String{
-  String capitalize() => "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+  String capitalize() {
+    if (this.length == 0) return this;
+
+    String str = "${this[0].toUpperCase()}";
+    if (this.length > 1) str += "${this.substring(1).toLowerCase()}";
+    return str;
+  }
 
   String capitalizeEachWord(){
     List<String> words = this.split(" ");
@@ -12,7 +18,7 @@ extension StringExt on String{
       case "Y":
         return "Yes";
       case "N":
-        return "N";
+        return "No";
       default:
         return "-";
     }
@@ -22,6 +28,7 @@ extension StringExt on String{
 abstract class Entity{
   Entity.fromJson(Map json);
   Map toJson();
+  String toString();
 }
 
 class Carpark implements Entity{
@@ -47,26 +54,14 @@ class Carpark implements Entity{
 
   Carpark.fromJson(Map json):
     this(
-      carparkNo: json["carparkNo"],
-      address: json["address"],
-      carparkType: json["carparkType"],
-      parkingSystem: json["parkingSystem"],
-      shortTermParking: json["shortTermParking"],
-      freeParking: json["freeParking"],
-      nightParking: json["nightParking"],
-      carparkBasement: json["carparkBasement"]
-    );
-
-  Carpark.fromApiJson(Map<String, Object?> json):
-    this(
-      carparkNo: json["car_park_no"] as String,
+      carparkNo: json["carparkNo"] as String,
       address: json["address"] as String,
-      carparkType: json["car_park_type"] as String,
-      parkingSystem: json["type_of_parking_system"] as String,
-      shortTermParking: json["short_term_parking"] as String,
-      freeParking: json["free_parking"] as String,
-      nightParking: json["night_parking"] as String,
-      carparkBasement: json["car_park_basement"] as String
+      carparkType: json["carparkType"] as String,
+      parkingSystem: json["parkingSystem"] as String,
+      shortTermParking: json["shortTermParking"] as String,
+      freeParking: json["freeParking"] as String,
+      nightParking: json["nightParking"] as String,
+      carparkBasement: json["carparkBasement"] as String
     );
 
   Map<String, Object?> toJson() => {
@@ -78,6 +73,19 @@ class Carpark implements Entity{
     "nightParking": nightParking,
     "carparkBasement": carparkBasement
   };
+
+  String toString() {
+    String details = [
+      "Address: $address",
+      "Carpark Type: $carparkType",
+      "Parking System: $parkingSystem",
+      "Short-Term Parking: $shortTermParking",
+      "Free Parking: $freeParking",
+      "Night Parking: $nightParking",
+      "Carpark Basement: $carparkBasement"
+    ].join("\n\t");
+    return ["Carpark $carparkNo", details].join("\n");
+  }
 
   String get id => carparkNo;
 }
