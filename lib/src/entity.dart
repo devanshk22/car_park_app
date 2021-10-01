@@ -26,7 +26,7 @@ extension StringExt on String{
 }
 
 abstract class Entity{
-  Entity.fromJson(Map json);
+  Entity.fromJson(String documentID, Map json);
   Map toJson();
   String toString();
 }
@@ -52,9 +52,9 @@ class Carpark implements Entity{
     required this.carparkBasement
   });
 
-  Carpark.fromJson(Map json):
+  Carpark.fromJson(String documentID, Map json):
     this(
-      carparkNo: json["carparkNo"] as String,
+      carparkNo: documentID,
       address: json["address"] as String,
       carparkType: json["carparkType"] as String,
       parkingSystem: json["parkingSystem"] as String,
@@ -185,7 +185,7 @@ class Booking implements Entity{
         startTime: json["startTime"],
         endTime: json["endTime"],
         bookingStatus: BookingStatusExt.fromString(json["bookingStatus"]),
-        carpark: Carpark.fromJson(json["carpark"] as Map<String, Object?>)
+        carpark: Carpark.fromJson("pass", json["carpark"] as Map<String, Object?>)
       );
 
   Map<String, Object?> toJson() => {
@@ -226,7 +226,7 @@ class UserAccount{
         isVerified: json["isVerified"],
         activeBooking: Booking.fromJson(json["activeBooking"]),
         bookingHistory: [for (int i=0; i<json["bookingHistory"].length; i++) Booking.fromJson(json["bookingHistory"][i])],
-        favourites: [for (int i=0; i<json["favourites"].length; i++) Carpark.fromJson(json["favourites"][i])],
+        favourites: [for (int i=0; i<json["favourites"].length; i++) Carpark.fromJson("pass", json["favourites"][i])],
       );
 
   Map toJson() => {

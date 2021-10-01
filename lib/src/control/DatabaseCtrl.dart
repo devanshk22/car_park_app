@@ -10,23 +10,35 @@ class DatabaseCtrl{
   final CollectionReference carparkInfoCollection = FirebaseFirestore.instance
       .collection('hdb-carpark-information')
       .withConverter(
-        fromFirestore: (snapshot, _) => snapshot.data(),//Carpark.fromJson(snapshot.data() as Map),
+        fromFirestore: (snapshot, _) => Carpark.fromJson(snapshot.id, snapshot.data() as Map),
         toFirestore: (object, _) => (object as CarparkDataHandler).toJson()
       );
 
   DatabaseCtrl();
 
-  getCarpark(String carparkNo) async => await carparkInfoCollection.doc(carparkNo).get().then((snapshot) => snapshot.data());
+  Future<Object?> _getDocument(CollectionReference collection, String id) async => await collection.doc(id).get().then((snapshot) => snapshot.data());
 
-  updateCarparkInfo() async{
+  Future<Carpark> getCarpark(String carparkNo) async => await _getDocument(carparkInfoCollection, carparkNo) as Carpark;
+
+  Future<Map> _ckanQuery({String resourceID = _carparkInfoID, int? limit, int? offset}) async{
+    // form CKAN query URL
+    String query = 'https://data.gov.sg/api/action/datastore_search?resource_id=$resourceID';
+    if (limit != null) query += "&limit=${limit.toString()}";
+    if (offset != null) query += "&offset=${offset.toString()}";
+
+    // Query data
+    http.Response response = await http.get(Uri.parse(query));
+    return json.decode(response.body)['result'];
+  }
+
+  Future<void> updateCarparkInfo() async{
     // Get number of rows
-    String ckanQuery = _ckanQuery();
-    http.Response response = await http.get(Uri.parse(ckanQuery));
-    int totalNo = json.decode(response.body)['result']["total"];
+    Map result = await _ckanQuery();
+    List totalNo = result["total"];
 
-    ckanQuery = _ckanQuery(limit: totalNo);
-    response = await http.get(Uri.parse(ckanQuery));
-    List data = json.decode(response.body)['result']["records"];
+    // get data
+    result = await _ckanQuery();
+    List data = result["records"];
 
     // Update database
     for (var i=0; i<data.length; i++){
@@ -37,12 +49,5 @@ class DatabaseCtrl{
       // else, add document
       await carparkInfoCollection.doc(carpark.id).set(carpark);
     }
-  }
-
-  String _ckanQuery({String resourceID = _carparkInfoID, int? limit, int? offset}){
-    String query = 'https://data.gov.sg/api/action/datastore_search?resource_id=$resourceID';
-    if (limit != null) query += "&limit=${limit.toString()}";
-    if (offset != null) query += "&offset=${offset.toString()}";
-    return query;
   }
 }
