@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../entity.dart';
+import '../entities/all.dart';
 
 class DatabaseCtrl{
   static const String _carparkInfoID = "139a3035-e624-4f56-b63f-89ae28d4ae4c";
