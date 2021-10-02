@@ -2,5 +2,4 @@
 
 export 'booking.dart';
 export 'carpark.dart';
-export 'carparkDataHandler.dart';
 export 'userAccount.dart';

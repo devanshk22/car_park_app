@@ -1,21 +1,73 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'booking.dart';
 import 'carpark.dart';
+import '../constants/databaseConsts.dart';
 
 class User {
   late String fullName;
   late String email;
   late String phone;
-  late String password;
-  late bool isVerified;
-  late List<Booking> bookingList;
-  late List<Carpark> favourites;
+  late List<Booking> bookings = [];
+  late List<Carpark> favourites = [];
 
-  User(String email, String fullName, String phone, String password) {
+  User(String email, String fullName, String phone) {
     this.email = email;
     this.fullName = fullName;
     this.phone = phone;
-    this.password = password;
   }
+
+  User.fromJson(String id, Map json){
+    email = id;
+    fullName = json[userConst.fullName] as String;
+    phone = json[userConst.phone] as String;
+    bookings = json[userConst.bookings] as List<Booking>;
+    favourites = json[userConst.favourites] as List<Carpark>;
+  }
+
+  Map<String, Object?> userInfoToJson() => {userConst.fullName: fullName, userConst.phone: phone};
+
+  Map<String, Object?> favouritesToJson(){
+    // Convert favourites from list of carparks to list of document references
+    List<DocumentReference> favouriteRefs = [
+      for (int i=0; i<favourites.length; i++)
+        FirebaseFirestore.instance.collection(carparkConst.collectionName).doc(favourites[i].id)
+    ];
+    return {userConst.favourites: favouriteRefs};
+  }
+
+  Map<String, Object?> toJson() {
+    Map<String, Object?> json = userInfoToJson();
+    json.addAll(favouritesToJson());
+    return json;
+  }
+
+  String userInfoToString() => [
+    "User $email",
+    "-" * (5 + email.length),
+    "Full Name: $fullName",
+    "Phone Number: $phone"
+  ].join("\n");
+
+  String favouritesToString() => [
+    "FAVOURITES",
+    "----------",
+    for (int i=0; i<favourites.length; i++) favourites[i].toString()
+  ].join("\n");
+
+  String bookingsToString() =>[
+    "BOOKINGS",
+    "--------",
+    for (int i=0; i<bookings.length; i++) bookings[i].toString()
+  ].join("\n");
+
+  String toString() => [
+    userInfoToString(),
+    favouritesToString(),
+    bookingsToString()
+  ].join("\n");
+
+  String get id => email;
 
   String getEmail() {
     return this.email;
@@ -33,27 +85,11 @@ class User {
     this.fullName = fullName;
   }
 
-  String getPassword() {
-    return this.password;
-  }
-
-  void setPassword(String password) {
-    this.password = password;
-  }
-
   String getPhone() {
     return this.phone;
   }
 
   void setPhone(String phone) {
     this.phone = phone;
-  }
-
-  bool getIsVerified() {
-    return this.isVerified;
-  }
-
-  void setIsVerified(bool isVerified) {
-    this.isVerified = isVerified;
   }
 }
