@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Car Park App',
-      initialRoute: '/',
+      initialRoute: '/home',
       routes: {
         '/': (context) => LoginUI(),
         '/booking': (context) => BookingUI(),
