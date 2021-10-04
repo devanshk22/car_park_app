@@ -2,4 +2,4 @@
 
 export 'booking.dart';
 export 'carpark.dart';
-export 'userAccount.dart';
+export '../models/userAccount.dart';

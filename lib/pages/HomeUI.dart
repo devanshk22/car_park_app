@@ -1,4 +1,5 @@
 import 'package:car_park_app/constants/app_constants.dart';
+import 'package:car_park_app/pages/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/widgets/HomeCard.dart';
 
@@ -10,10 +11,26 @@ class HomeUI extends StatefulWidget {
 }
 
 class _HomeUIState extends State<HomeUI> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
+      appBar: AppBar(
+        title: Text("Home"),
+        backgroundColor: Colors.grey[800],
+        elevation: 0.0,
+        actions: <Widget>[
+          TextButton.icon(
+              onPressed: () async {
+                await _auth.signOut();
+              },
+              icon: Icon(Icons.person),
+              label: Text("Log Out"))
+        ],
+        automaticallyImplyLeading: false,
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
