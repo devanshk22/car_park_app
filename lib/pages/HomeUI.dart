@@ -38,13 +38,6 @@ class _HomeUIState extends State<HomeUI> {
             Container(
               padding:
                   EdgeInsets.fromLTRB(screenGap, screenGap, screenGap, cardGap),
-              child: Text(
-                'Home',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
             ),
             Center(
               // TODO: cycle through all carpark to generate carpark list
