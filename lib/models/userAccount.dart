@@ -6,17 +6,19 @@ import '../constants/databaseConsts.dart';
 
 class UserAccount {
   final String uid;
-  late String fullName;
-  late String email;
-  late String phone;
-  late List<Booking> bookings = [];
-  late List<Carpark> favourites = [];
+  String? fullName;
+  String? email;
+  String? password;
+  String? phone;
+  List<Booking> bookings = [];
+  List<Carpark> favourites = [];
 
   UserAccount({
     required this.uid,
-    //required this.email,
-    //required this.fullName,
-    //required this.phone
+    // required this.fullName,
+    // required this.email,
+    // required this.password,
+    // required this.phone
   });
 
   // UserAccount.fromJson(String id, Map json) {
@@ -49,7 +51,7 @@ class UserAccount {
 
   String userInfoToString() => [
         "User $email",
-        "-" * (5 + email.length),
+        "-" * (5 + email!.length),
         "Full Name: $fullName",
         "Phone Number: $phone"
       ].join("\n");
@@ -69,10 +71,10 @@ class UserAccount {
   String toString() =>
       [userInfoToString(), favouritesToString(), bookingsToString()].join("\n");
 
-  String get id => email;
+  String get id => email!;
 
   String getEmail() {
-    return this.email;
+    return this.email!;
   }
 
   void setEmail(String email) {
@@ -80,7 +82,7 @@ class UserAccount {
   }
 
   String getFullName() {
-    return this.fullName;
+    return this.fullName!;
   }
 
   void setFullName(String fullName) {
@@ -88,7 +90,7 @@ class UserAccount {
   }
 
   String getPhone() {
-    return this.phone;
+    return this.phone!;
   }
 
   void setPhone(String phone) {

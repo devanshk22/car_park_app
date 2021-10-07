@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
         title: 'Car Park App',
-        home: myBottomNavigationBar(),
+        home: Wrapper(),
       ),
       catchError: (User, UserAccount) => null,
     );
@@ -72,7 +72,7 @@ class _myBottomNavigationBarState extends State<myBottomNavigationBar> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car_filled),
+            icon: Icon(Icons.directions_car),
             label: 'Booking',
           ),
           BottomNavigationBarItem(

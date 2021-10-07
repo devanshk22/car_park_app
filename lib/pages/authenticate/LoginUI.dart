@@ -2,38 +2,101 @@ import 'package:car_park_app/pages/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginUI extends StatefulWidget {
-  const LoginUI({Key? key}) : super(key: key);
-
+  final Function toggleView;
+  LoginUI({required this.toggleView});
   @override
   _LoginUIState createState() => _LoginUIState();
 }
 
 class _LoginUIState extends State<LoginUI> {
+  //text field state
+  String email = " ";
+  String password = " ";
+  String error = " ";
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Login To Car Park App'),
+        title: Text('Login'),
+        actions: <Widget>[
+          TextButton.icon(
+            icon: Icon(Icons.person),
+            label: Text("Register"),
+            onPressed: () {
+              widget.toggleView();
+            },
+          )
+        ],
         elevation: 0.0,
         centerTitle: true,
         backgroundColor: Colors.grey[850],
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: ElevatedButton(
-          child: Text('Sign-in Anonymously'),
-          onPressed: () async {
-            dynamic result = await _auth.signInAnon();
-            if (result == null) {
-              print("Error signing in");
-            } else {
-              print("User signed in");
-              print(result.uid);
-            }
-          },
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 20.0,
+              ),
+              TextFormField(
+                validator: (val) =>
+                    val!.isEmpty ? "Please enter an Email ID" : null,
+                onChanged: (value) {
+                  setState(() => email = value);
+                },
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextFormField(
+                obscureText: true,
+                validator: (val) => val!.length < 6
+                    ? "Please enter a password with 6 or more characters"
+                    : null,
+                onChanged: (value) {
+                  setState(() => password = value);
+                },
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.teal),
+                ),
+                child: Text(
+                  "Sign in",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    dynamic result = await _auth.signIn(email, password);
+                    if (result == null) {
+                      setState(() => error =
+                          'Invalid Credentials. Please try signing in again.');
+                    }
+                  }
+                },
+              ),
+              SizedBox(
+                height: 12.0,
+              ),
+              Text(
+                error,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14.0,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
