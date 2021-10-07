@@ -1,17 +1,12 @@
 import 'package:car_park_app/entities/all.dart';
 import 'package:car_park_app/pages/services/auth.dart';
-import 'package:car_park_app/pages/wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:car_park_app/pages/BookingUI.dart';
-import 'package:car_park_app/pages/FavouritesUI.dart';
 import 'package:car_park_app/pages/ForgotPasswordUI.dart';
-import 'package:car_park_app/pages/HistoryUI.dart';
-import 'package:car_park_app/pages/HomeUI.dart';
 import 'package:car_park_app/pages/authenticate/LoginUI.dart';
 import 'package:car_park_app/pages/MapUI.dart';
-import 'package:car_park_app/pages/MyAccountUI.dart';
 import 'package:car_park_app/pages/RegistrationUI.dart';
 import 'package:car_park_app/pages/SearchResultUI.dart';
+import 'package:car_park_app/pages/myBottomNavigationBar';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
@@ -29,66 +24,24 @@ class MyApp extends StatelessWidget {
       initialData: null,
       value: AuthService().user,
       child: MaterialApp(
+        home: myBottomNavigationBar(),
         title: 'Car Park App',
-        home: Wrapper(),
+        initialRoute: '/bottomnavbar',
+        routes: {
+          //'/': (context) => LoginUI(),
+          '/bottomnavbar': (context) => myBottomNavigationBar(),
+          '/home': (context) => myBottomNavigationBar(),
+          '/booking': (context) => myBottomNavigationBar(),
+          '/history': (context) => myBottomNavigationBar(),
+          '/favourites': (context) => myBottomNavigationBar(),
+          '/myaccount': (context) => myBottomNavigationBar(),
+          '/forgotpassword': (context) => ForgotPasswordUI(),
+          '/map': (context) => MapUI(),
+          '/registration': (context) => RegistrationUI(),
+          '/searchresult': (context) => SearchResultUI(),
+        },
       ),
       catchError: (User, UserAccount) => null,
-    );
-  }
-}
-
-class myBottomNavigationBar extends StatefulWidget {
-  @override
-  _myBottomNavigationBarState createState() => _myBottomNavigationBarState();
-}
-
-class _myBottomNavigationBarState extends State<myBottomNavigationBar> {
-  int _selectedIndex = 0;
-  final List<Widget> children = [
-    HomeUI(),
-    BookingUI(),
-    HistoryUI(),
-    FavouritesUI(),
-    MyAccountUI(),
-  ];
-
-  void onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: children[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car),
-            label: 'Booking',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_outline_outlined),
-            label: 'Favourites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
-            label: 'Account',
-          ),
-        ],
-      ),
     );
   }
 }

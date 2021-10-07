@@ -17,6 +17,7 @@ class carparkConst{
 
 class userConst{
   static const String collectionName = "users";
+  static const String email = "email";
   static const String favourites = "favourites";
   static const String fullName = "fullName";
   static const String phone = "phone";

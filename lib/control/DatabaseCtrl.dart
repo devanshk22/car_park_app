@@ -39,10 +39,7 @@ class DatabaseCtrl{
   Future<void> updateCarparkInfo() async{
     // Get number of rows
     Map result = await _ckanQuery();
-    List totalNo = result["total"];
-
     // get data
-    result = await _ckanQuery();
     List data = result["records"];
 
     // Update database
@@ -56,11 +53,11 @@ class DatabaseCtrl{
     }
   }
 
-  Future<User> getUser(String email) async{
+  Future<UserAccount> getUser(String uid) async{
     // Get user information
-    Map userMapData = await _getDocument(userCollection, email) as Map;
+    Map userMapData = await _getDocument(userCollection, uid) as Map;
 
-    DocumentReference userDocRef = userCollection.doc(email);
+    DocumentReference userDocRef = userCollection.doc(uid);
 
     // Get bookings
     QuerySnapshot querySnapshot = await userDocRef
@@ -83,19 +80,19 @@ class DatabaseCtrl{
     List<Carpark> favourites = [for (int i=0; i<favouriteRefs.length; i++) await getCarpark(favouriteRefs[i].id)];
     userMapData[userConst.favourites] = favourites;
 
-    return User.fromJson(email, userMapData);
+    return UserAccount.fromJson(uid, userMapData);
   }
 
-  Future<void> addUser(User user) async => await userCollection.doc(user.id).set(user.toJson());
+  Future<void> addUser(UserAccount user) async => await userCollection.doc(user.id).set(user.toJson());
 
   Future<void> _updateUserFields(String userEmail, Map data) async => userCollection.doc(userEmail).update(data as Map<String, Object?>);
 
-  Future<void> updateUserInfo(User user) async => _updateUserFields(user.id, user.userInfoToJson());
+  Future<void> updateUserInfo(UserAccount user) async => _updateUserFields(user.id, user.userInfoToJson());
 
-  Future<void> updateFavourites(User user) async => _updateUserFields(user.id, user.favouritesToJson());
+  Future<void> updateFavourites(UserAccount user) async => _updateUserFields(user.id, user.favouritesToJson());
 
   // this function updates everything except bookings
-  Future<void> updateUser(User user) async => await userCollection.doc(user.id).update(user.toJson());
+  Future<void> updateUser(UserAccount user) async => await userCollection.doc(user.id).update(user.toJson());
 
   Future<void> removeUser(String email) async => await userCollection.doc(email).delete();
 
