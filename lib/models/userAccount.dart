@@ -5,30 +5,30 @@ import '../entities/carpark.dart';
 import '../constants/databaseConsts.dart';
 
 class UserAccount {
-  final String uid;
-  late String fullName;
-  late String email;
-  late String phone;
+  late String uid;
+  late String fullName = "";
+  late String email = "";
+  late String phone = "";
   late List<Booking> bookings = [];
   late List<Carpark> favourites = [];
 
-  UserAccount({
-    required this.uid,
-    //required this.email,
-    //required this.fullName,
-    //required this.phone
-  });
+  UserAccount({required this.uid, String? email, String? fullName, String? phone}){
+    if (email != null) this.email = email;
+    if (fullName != null) this.fullName = fullName;
+    if (phone != null) this.phone = phone;
+  }
 
-  // UserAccount.fromJson(String id, Map json) {
-  //   email = id;
-  //   fullName = json[userConst.fullName] as String;
-  //   phone = json[userConst.phone] as String;
-  //   bookings = json[userConst.bookings] as List<Booking>;
-  //   favourites = json[userConst.favourites] as List<Carpark>;
-  // }
+  UserAccount.fromJson(String uid, Map json) {
+    this.uid = uid;
+    email = json[userConst.email] as String;
+    fullName = json[userConst.fullName] as String;
+    phone = json[userConst.phone] as String;
+    bookings = json[userConst.bookings] as List<Booking>;
+    favourites = json[userConst.favourites] as List<Carpark>;
+   }
 
   Map<String, Object?> userInfoToJson() =>
-      {userConst.fullName: fullName, userConst.phone: phone};
+      {userConst.email: email, userConst.fullName: fullName, userConst.phone: phone};
 
   Map<String, Object?> favouritesToJson() {
     // Convert favourites from list of carparks to list of document references
@@ -48,11 +48,12 @@ class UserAccount {
   }
 
   String userInfoToString() => [
-        "User $email",
-        "-" * (5 + email.length),
-        "Full Name: $fullName",
-        "Phone Number: $phone"
-      ].join("\n");
+    "User $uid",
+    "-" * (5 + uid.length),
+    "Email: $email",
+    "Full Name: $fullName",
+    "Phone Number: $phone"
+  ].join("\n");
 
   String favouritesToString() => [
         "FAVOURITES",
@@ -69,7 +70,7 @@ class UserAccount {
   String toString() =>
       [userInfoToString(), favouritesToString(), bookingsToString()].join("\n");
 
-  String get id => email;
+  String get id => uid;
 
   String getEmail() {
     return this.email;
