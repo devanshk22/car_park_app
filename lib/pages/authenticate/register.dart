@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:car_park_app/pages/services/auth.dart';
 import 'package:car_park_app/shared/constants.dart';
@@ -51,8 +53,13 @@ class _RegisterState extends State<Register> {
                 ),
                 TextFormField(
                   decoration: textInputDecoration.copyWith(
-                    prefixIcon: Icon(Icons.email),
-                    labelText: 'Email',
+                    hintText: 'Full Name',
+                    labelText: 'Full Name',
+                    labelStyle: TextStyle(color: Colors.pink, fontSize: 16.0),
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.pink,
+                    ),
                   ),
                   validator: (val) =>
                       val!.isEmpty ? "Please enter a name" : null,
@@ -64,6 +71,15 @@ class _RegisterState extends State<Register> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  decoration: textInputDecoration.copyWith(
+                    hintText: 'Email ID',
+                    labelText: 'Email ID',
+                    labelStyle: TextStyle(color: Colors.pink, fontSize: 16.0),
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Colors.pink,
+                    ),
+                  ),
                   validator: (val) =>
                       val!.isEmpty ? "Please enter an Email ID" : null,
                   onChanged: (value) {
@@ -74,6 +90,15 @@ class _RegisterState extends State<Register> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  decoration: textInputDecoration.copyWith(
+                    hintText: 'Password',
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.pink, fontSize: 16.0),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.pink,
+                    ),
+                  ),
                   validator: (val) => val!.length < 6
                       ? "Please enter a password with 6 or more characters"
                       : null,
@@ -86,6 +111,15 @@ class _RegisterState extends State<Register> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  decoration: textInputDecoration.copyWith(
+                    hintText: 'Confirm Password',
+                    labelText: 'Confirm Password',
+                    labelStyle: TextStyle(color: Colors.pink, fontSize: 16.0),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.pink,
+                    ),
+                  ),
                   validator: (val) => val != password
                       ? "Confirm password does not match"
                       : null,
@@ -98,6 +132,15 @@ class _RegisterState extends State<Register> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  decoration: textInputDecoration.copyWith(
+                    hintText: 'Phone Number',
+                    labelText: 'Phone Number',
+                    labelStyle: TextStyle(color: Colors.pink, fontSize: 16.0),
+                    prefixIcon: Icon(
+                      Icons.phone,
+                      color: Colors.pink,
+                    ),
+                  ),
                   validator: (val) => val!.length != 8
                       ? "Please enter a phone number with 8 digits"
                       : null,
@@ -111,7 +154,7 @@ class _RegisterState extends State<Register> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.teal),
+                        MaterialStateProperty.all<Color>(Colors.pink),
                   ),
                   child: Text(
                     "Register",

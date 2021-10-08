@@ -77,7 +77,7 @@ class UserAccount {
   String get id => uid;
 
   String getEmail() {
-    return this.email!;
+    return this.email;
   }
 
   void setEmail(String email) {
@@ -85,7 +85,7 @@ class UserAccount {
   }
 
   String getFullName() {
-    return this.fullName!;
+    return this.fullName;
   }
 
   void setFullName(String fullName) {
@@ -93,7 +93,7 @@ class UserAccount {
   }
 
   String getPhone() {
-    return this.phone!;
+    return this.phone;
   }
 
   void setPhone(String phone) {

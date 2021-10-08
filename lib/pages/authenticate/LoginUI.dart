@@ -1,5 +1,6 @@
 import 'package:car_park_app/pages/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:car_park_app/shared/constants.dart';
 
 class LoginUI extends StatefulWidget {
   final Function toggleView;
@@ -45,6 +46,15 @@ class _LoginUIState extends State<LoginUI> {
                 height: 20.0,
               ),
               TextFormField(
+                decoration: textInputDecoration.copyWith(
+                  hintText: 'Email ID',
+                  labelText: 'Email ID',
+                  labelStyle: TextStyle(color: Colors.pink, fontSize: 16.0),
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: Colors.pink,
+                  ),
+                ),
                 validator: (val) =>
                     val!.isEmpty ? "Please enter an Email ID" : null,
                 onChanged: (value) {
@@ -55,6 +65,15 @@ class _LoginUIState extends State<LoginUI> {
                 height: 20.0,
               ),
               TextFormField(
+                decoration: textInputDecoration.copyWith(
+                  hintText: 'Password',
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.pink, fontSize: 16.0),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.pink,
+                  ),
+                ),
                 obscureText: true,
                 validator: (val) => val!.length < 6
                     ? "Please enter a password with 6 or more characters"

@@ -1,12 +1,13 @@
 import 'package:car_park_app/entities/all.dart';
 import 'package:car_park_app/pages/services/auth.dart';
+import 'package:car_park_app/pages/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/pages/ForgotPasswordUI.dart';
 import 'package:car_park_app/pages/authenticate/LoginUI.dart';
 import 'package:car_park_app/pages/MapUI.dart';
 import 'package:car_park_app/pages/RegistrationUI.dart';
 import 'package:car_park_app/pages/SearchResultUI.dart';
-import 'package:car_park_app/pages/myBottomNavigationBar';
+import 'package:car_park_app/pages/myBottomNavigationBar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
@@ -24,9 +25,9 @@ class MyApp extends StatelessWidget {
       initialData: null,
       value: AuthService().user,
       child: MaterialApp(
-        home: myBottomNavigationBar(),
+        home: Wrapper(),
         title: 'Car Park App',
-        initialRoute: '/bottomnavbar',
+        initialRoute: '/wrapper',
         routes: {
           //'/': (context) => LoginUI(),
           '/bottomnavbar': (context) => myBottomNavigationBar(),
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
           '/map': (context) => MapUI(),
           '/registration': (context) => RegistrationUI(),
           '/searchresult': (context) => SearchResultUI(),
+          '/wrapper': (context) => Wrapper(),
         },
       ),
       catchError: (User, UserAccount) => null,
