@@ -19,7 +19,8 @@ class _HomeUIState extends State<HomeUI> {
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
         title: Text("Home"),
-        backgroundColor: Colors.grey[800],
+        centerTitle: true,
+        backgroundColor: Colors.grey[850],
         elevation: 0.0,
         actions: <Widget>[
           TextButton.icon(

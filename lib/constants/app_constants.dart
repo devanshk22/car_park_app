@@ -15,4 +15,4 @@ double getScreenHeightExcludeSafeArea(BuildContext context) {
 }
 
 const double screenGap = 20;
-const double cardGap = 15;
+const double cardGap = 10;
