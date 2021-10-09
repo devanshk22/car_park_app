@@ -3,6 +3,7 @@ import 'package:car_park_app/pages/HomeUI.dart';
 import 'package:car_park_app/pages/authenticate/authenticate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:car_park_app/pages/myBottomNavigationBar.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -13,7 +14,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return Authenticate();
     } else {
-      return HomeUI();
+      return myBottomNavigationBar();
     }
   }
 }
