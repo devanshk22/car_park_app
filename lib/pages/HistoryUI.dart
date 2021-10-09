@@ -21,7 +21,7 @@ class _HistoryUIState extends State<HistoryUI> {
       ),
       body: Container(
         // TODO: generate list view with CarparkCtrl
-        padding: EdgeInsets.fromLTRB(screenGap, cardGap, screenGap, cardGap),
+        padding: EdgeInsets.all(screenGap),
         child: HistoryCard(
           carparkName: 'BLK 269/269A/269B CHENG YAN COURT CAR PARK',
           date: 'Yesterday',

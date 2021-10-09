@@ -22,7 +22,7 @@ class _FavouritesUIState extends State<FavouritesUI> {
       ),
       body: Container(
         // TODO: generate favourites list view with UserAccountCtrl
-        padding: EdgeInsets.fromLTRB(screenGap, cardGap, screenGap, cardGap),
+        padding: EdgeInsets.all(screenGap),
         child: FavouritesCard(
           carparkName: 'BLK 269/269A/269B CHENG YAN COURT CAR PARK',
           slotsAvailable: 1,

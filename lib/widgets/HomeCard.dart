@@ -45,13 +45,13 @@ class _HomeCardState extends State<HomeCard> {
             ),
           ),
           Positioned(
-            top: 37,
+            top: 15,
             left: 15,
             child: Text(
-              '${widget.kmAway} km away',
+              '${widget.carparkName}',
               textAlign: TextAlign.left,
               style: TextStyle(
-                  color: Colors.amber,
+                  color: Colors.white,
                   fontFamily: 'Roboto',
                   fontSize: 10,
                   letterSpacing:
@@ -61,13 +61,13 @@ class _HomeCardState extends State<HomeCard> {
             ),
           ),
           Positioned(
-            top: 15,
+            top: 37,
             left: 15,
             child: Text(
-              '${widget.carparkName}',
+              '${widget.kmAway} km away',
               textAlign: TextAlign.left,
               style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.amber,
                   fontFamily: 'Roboto',
                   fontSize: 10,
                   letterSpacing:

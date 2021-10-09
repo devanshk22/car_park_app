@@ -34,7 +34,7 @@ class _HomeUIState extends State<HomeUI> {
       ),
       body: Container(
         // TODO: generate list view with CarparkCtrl
-        padding: EdgeInsets.fromLTRB(screenGap, cardGap, screenGap, cardGap),
+        padding: EdgeInsets.all(screenGap),
         child: HomeCard(
           carparkName: 'BLK 232 BRAS BASAH BASEMENT CAR PARK',
           slotsAvailable: 1,
