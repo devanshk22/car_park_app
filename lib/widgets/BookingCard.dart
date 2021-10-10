@@ -1,4 +1,5 @@
 import 'package:car_park_app/entities/carpark.dart';
+import 'package:car_park_app/pages/MapUI.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 
@@ -168,7 +169,12 @@ Car Park Basement: ${widget.carpark.carparkBasement}
                     width: getScreenWidth(context) - 100,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MapUI()),
+                        );
+                      },
                       child: Text('View on Map'),
                       style: ButtonStyle(
                         shape:
