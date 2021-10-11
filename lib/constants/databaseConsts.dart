@@ -1,7 +1,7 @@
 // The collection and field names of the database
 
 class carparkConst{
-  static const String collectionName = carparkInfoApiConst.collectionName;
+  static const String collectionName = carparkInfoConst.collectionName;
   static const String address = "address";
   static const String carparkBasement = "carparkBasement";
   static const String carparkDecks = "carparkDecks";
@@ -11,8 +11,7 @@ class carparkConst{
   static const String nightParking = "nightParking";
   static const String parkingSystem = "parkingSystem";
   static const String shortTermParking = "shortTermParking";
-  static const String xCoord = "xCoord";
-  static const String yCoord = "yCoord";
+  static const String location = "location";
 }
 
 class userConst{
@@ -33,7 +32,7 @@ class bookingConst{
   static const String carparkObj = "carpark";
 }
 
-class carparkInfoApiConst{
+class carparkInfoConst{
   static const String collectionName = "hdb-carpark-information";
   static const String carparkNo = "car_park_no";
   static const String address = "address";

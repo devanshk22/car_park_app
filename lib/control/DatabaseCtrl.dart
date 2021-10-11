@@ -32,9 +32,26 @@ class DatabaseCtrl{
     return json.decode(response.body)['result'];
   }
 
+  Future<Map> _gridToLatLong(String x, String y) async{
+    String query = 'https://developers.onemap.sg/commonapi/convert/3414to4326?X=$x&Y=$y';
+    http.Response response = await http.get(Uri.parse(query));
+    return json.decode(response.body);
+  }
+
   Future<Object?> _getDocument(CollectionReference collection, String id) async => await collection.doc(id).get().then((snapshot) => snapshot.data());
 
   Future<Carpark> getCarpark(String carparkNo) async => await _getDocument(carparkInfoCollection, carparkNo) as Carpark;
+
+  Future<List<GeoPoint>> getAllCarparkLocations() async{
+    List<QueryDocumentSnapshot> carparkDocs = await carparkInfoCollection.get().then((snapshot) => snapshot.docs);
+    Carpark carpark;
+    List<GeoPoint> locations = [];
+    for (int i=0; i<carparkDocs.length; i++){
+      carpark = carparkDocs[i].data() as Carpark;
+      locations.add(carpark.location!);
+    }
+    return locations;
+  }
 
   Future<void> updateCarparkInfo() async{
     // Get number of rows
@@ -43,9 +60,17 @@ class DatabaseCtrl{
     List data = result["records"];
 
     // Update database
+    Map latLong;
+    GeoPoint location;
+    Map dataRow;
     for (var i=0; i<data.length; i++){
+      dataRow = data[i];
+
       // Format data
-      CarparkDataHandler carpark = CarparkDataHandler.fromJson(data[i]);
+      Map latLong = await _gridToLatLong(dataRow[carparkInfoConst.xCoord], dataRow[carparkInfoConst.yCoord]);
+      location = GeoPoint(latLong["latitude"], latLong["longitude"]);
+      dataRow[carparkConst.location] = location;
+      CarparkDataHandler carpark = CarparkDataHandler.fromJson(dataRow);
 
       // if document exists in collection, update document
       // else, add document

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../constants/databaseConsts.dart';
 
 class Carpark{
@@ -9,6 +11,7 @@ class Carpark{
   String freeParking;
   String nightParking;
   String carparkBasement;
+  GeoPoint? location;
 
   Carpark({
     required this.carparkNo,
@@ -18,19 +21,21 @@ class Carpark{
     required this.shortTermParking,
     required this.freeParking,
     required this.nightParking,
-    required this.carparkBasement
+    required this.carparkBasement,
+    this.location
   });
 
   Carpark.fromJson(String documentID, Map json):
         this(
           carparkNo: documentID,
-          address: json[carparkConst.address] as String,
-          carparkType: json[carparkConst.carparkType] as String,
-          parkingSystem: json[carparkConst.parkingSystem] as String,
-          shortTermParking: json[carparkConst.shortTermParking] as String,
-          freeParking: json[carparkConst.freeParking] as String,
-          nightParking: json[carparkConst.nightParking] as String,
-          carparkBasement: json[carparkConst.carparkBasement] as String
+          address: json[carparkConst.address],
+          carparkType: json[carparkConst.carparkType],
+          parkingSystem: json[carparkConst.parkingSystem],
+          shortTermParking: json[carparkConst.shortTermParking],
+          freeParking: json[carparkConst.freeParking],
+          nightParking: json[carparkConst.nightParking],
+          carparkBasement: json[carparkConst.carparkBasement],
+          location: json[carparkConst.location]
       );
 
   Map<String, Object?> toJson() => {
@@ -86,8 +91,6 @@ extension on String{
 }
 
 class CarparkDataHandler extends Carpark{
-  double xCoord;
-  double yCoord;
   int carparkDecks;
   double gantryHeight;
 
@@ -100,8 +103,7 @@ class CarparkDataHandler extends Carpark{
     required String freeParking,
     required String nightParking,
     required String carparkBasement,
-    required this.xCoord,
-    required this.yCoord,
+    required GeoPoint location,
     required this.carparkDecks,
     required this.gantryHeight
   }):
@@ -113,23 +115,23 @@ class CarparkDataHandler extends Carpark{
           shortTermParking: shortTermParking,
           freeParking: freeParking,
           nightParking: nightParking,
-          carparkBasement: carparkBasement
+          carparkBasement: carparkBasement,
+          location: location
       );
 
   CarparkDataHandler.fromJson(Map json):
         this(
-          carparkNo: json[carparkInfoApiConst.carparkNo],
-          address: (json[carparkInfoApiConst.address] as String).capitalizeEachWord(),
-          carparkType: (json[carparkInfoApiConst.carparkType] as String).capitalizeEachWord(),
-          parkingSystem: (json[carparkInfoApiConst.parkingSystem] as String).capitalizeEachWord(),
-          shortTermParking: (json[carparkInfoApiConst.shortTermParking] as String).capitalizeEachWord(),
-          freeParking: (json[carparkInfoApiConst.freeParking] as String).capitalizeEachWord(),
-          nightParking: (json[carparkInfoApiConst.nightParking] as String).capitalizeEachWord(),
-          carparkBasement: (json[carparkInfoApiConst.carparkBasement] as String).formatYesNo(),
-          xCoord: double.parse(json[carparkInfoApiConst.xCoord]),
-          yCoord: double.parse(json[carparkInfoApiConst.yCoord]),
-          carparkDecks: int.parse(json[carparkInfoApiConst.carparkDecks]),
-          gantryHeight: double.parse(json[carparkInfoApiConst.gantryHeight])
+          carparkNo: json[carparkInfoConst.carparkNo],
+          address: (json[carparkInfoConst.address] as String).capitalizeEachWord(),
+          carparkType: (json[carparkInfoConst.carparkType] as String).capitalizeEachWord(),
+          parkingSystem: (json[carparkInfoConst.parkingSystem] as String).capitalizeEachWord(),
+          shortTermParking: (json[carparkInfoConst.shortTermParking] as String).capitalizeEachWord(),
+          freeParking: (json[carparkInfoConst.freeParking] as String).capitalizeEachWord(),
+          nightParking: (json[carparkInfoConst.nightParking] as String).capitalizeEachWord(),
+          carparkBasement: (json[carparkInfoConst.carparkBasement] as String).formatYesNo(),
+          location: json[carparkConst.location],
+          carparkDecks: int.parse(json[carparkInfoConst.carparkDecks]),
+          gantryHeight: double.parse(json[carparkInfoConst.gantryHeight])
       );
 
   Map<String, Object?> toJson() => {
@@ -140,8 +142,7 @@ class CarparkDataHandler extends Carpark{
     carparkConst.freeParking: freeParking,
     carparkConst.nightParking: nightParking,
     carparkConst.carparkBasement: carparkBasement,
-    carparkConst.xCoord: xCoord,
-    carparkConst.yCoord: yCoord,
+    carparkConst.location: location,
     carparkConst.carparkDecks: carparkDecks,
     carparkConst.gantryHeight: gantryHeight
   };
