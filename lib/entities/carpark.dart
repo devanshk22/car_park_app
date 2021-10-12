@@ -57,7 +57,9 @@ class Carpark{
     "Short-Term Parking: $shortTermParking",
     "Free Parking: $freeParking",
     "Night Parking: $nightParking",
-    "Carpark Basement: $carparkBasement"
+    "Carpark Basement: $carparkBasement",
+    "Latitude: ${location?.latitude}",
+    "Longitude: ${location?.longitude}"
   ].join("\n");
 
   String get id => carparkNo;
