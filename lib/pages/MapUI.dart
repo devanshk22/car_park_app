@@ -18,12 +18,10 @@ class MapUI extends StatefulWidget {
 
 class _MapUIState extends State<MapUI> {
   late LatLng userPosition;
+
   List<Marker> markers = [];
 
-  late LocationData _currentPosition;
-  late String _address, _dateTime;
-
-
+  Location _location = Location();
   static const _initialCameraPosition = CameraPosition(
       target: LatLng(1.3521, 103.8198),
       zoom: 15
@@ -31,33 +29,31 @@ class _MapUIState extends State<MapUI> {
 
   GoogleMapController? _googleMapController;
 
+  //checks the user's current location
+  void _onMapCreated(GoogleMapController _controller)
+  {
+    _googleMapController = _controller;
+    _location.onLocationChanged.listen((l){
+      _googleMapController!.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(l.latitude!, l.longitude!), zoom: 15),
+      ),
+      );
+    });
+  }
+
   @override
   void dispose() {
     _googleMapController?.dispose();
     super.dispose();
   }
 
-  // gets user's location
-  Future<LatLng> findUserLocation() async{
-    /*
-    Location location = Location();
-    LocationData userLocation;
-    PermissionStatus hasPermission = await
-    location.hasPermission();
-    bool active = await location.serviceEnabled();
-    if (hasPermission == PermissionStatus.granted && active){
-      userLocation = await location.getLocation();
-      userPosition = LatLng(userLocation!.latitude!, userLocation!.longitude!);
-    } else{
-      userPosition = LatLng(1.3521, 103.8198);
-    } */
-    return userPosition;
-  }
 
   Future findPlaces() async{
     //query database
     await Firebase.initializeApp();
-    List<Carpark> carparklist = await DatabaseCtrl.getAllCarparks();
+    DatabaseCtrl ctrl = DatabaseCtrl();
+    List<Carpark> carparklist = await ctrl.getAllCarparks();
     showMarkers(carparklist);
   }
 
@@ -90,11 +86,10 @@ class _MapUIState extends State<MapUI> {
         ),
 
         body: FutureBuilder(
-          future: findUserLocation(),
           builder: (BuildContext context, AsyncSnapshot snapshot){
             return GoogleMap(
               initialCameraPosition: _initialCameraPosition,
-              onMapCreated: (controller) => _googleMapController = controller,
+              onMapCreated: _onMapCreated,
               myLocationButtonEnabled: true,
               markers: Set<Marker>.of(markers),
             );

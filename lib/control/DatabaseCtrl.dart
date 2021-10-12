@@ -8,7 +8,7 @@ import '../entities/all.dart';
 class DatabaseCtrl{
   static const String _carparkInfoID = "139a3035-e624-4f56-b63f-89ae28d4ae4c";
 
-  static late CollectionReference carparkInfoCollection;
+  late CollectionReference carparkInfoCollection;
   late CollectionReference userCollection;
 
   DatabaseCtrl(){
@@ -42,7 +42,7 @@ class DatabaseCtrl{
 
   Future<Carpark> getCarpark(String carparkNo) async => await _getDocument(carparkInfoCollection, carparkNo) as Carpark;
 
- static Future<List<Carpark>> getAllCarparks() async{
+ Future<List<Carpark>> getAllCarparks() async{
     List<QueryDocumentSnapshot> carparkDocs = await carparkInfoCollection.get().then((snapshot) => snapshot.docs);
     List<Carpark> carparks = [];
     for (int i=0; i<carparkDocs.length; i++) carparks.add(carparkDocs[i].data() as Carpark);
