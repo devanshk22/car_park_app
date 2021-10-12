@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           '/wrapper': (context) => Wrapper(),
         },
       ),
-      catchError: (User, UserAccount) => null,
+      
     );
   }
 }
