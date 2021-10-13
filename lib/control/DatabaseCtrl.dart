@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../constants/databaseConsts.dart';
 import '../entities/all.dart';
@@ -76,7 +75,12 @@ class DatabaseCtrl{
     return carparks;
   }
   
-  Future<List<Carpark>> getNearbyCarparks(double latitude, double longitude, [double radius = 1]) async{
+  Future<List<Carpark>> getNearbyCarparks([double? latitude, double? longitude, double? radius]) async{
+    if ((latitude == null) || (longitude == null)){
+      latitude = 1.307778;
+      longitude=103.930278;
+    }
+    if (radius == null) radius = 1.0;
     GeoFirePoint center = geo.point(latitude: latitude, longitude: longitude);
     CollectionReference collection = FirebaseFirestore.instance.collection(carparkConst.collectionName);
     Stream stream = geo
