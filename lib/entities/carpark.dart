@@ -1,6 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 
 import '../constants/databaseConsts.dart';
+
+
+GeoFirePoint geoDataToGeoFirePoint(Map geoData){
+  GeoPoint geoPoint = geoData[carparkConst.geoPoint];
+  return GeoFirePoint(geoPoint.latitude, geoPoint.longitude);
+}
+
 
 class Carpark{
   String carparkNo;
@@ -11,7 +19,7 @@ class Carpark{
   String freeParking;
   String nightParking;
   String carparkBasement;
-  GeoPoint? location;
+  GeoFirePoint? location;
 
   Carpark({
     required this.carparkNo,
@@ -35,7 +43,7 @@ class Carpark{
           freeParking: json[carparkConst.freeParking],
           nightParking: json[carparkConst.nightParking],
           carparkBasement: json[carparkConst.carparkBasement],
-          location: json[carparkConst.location]
+          location: geoDataToGeoFirePoint(json[carparkConst.location])
       );
 
   Map<String, Object?> toJson() => {
@@ -58,8 +66,8 @@ class Carpark{
     "Free Parking: $freeParking",
     "Night Parking: $nightParking",
     "Carpark Basement: $carparkBasement",
-    "Latitude: ${location?.latitude}",
-    "Longitude: ${location?.longitude}"
+    "Latitude: ${location!.latitude}",
+    "Longitude: ${location!.longitude}"
   ].join("\n");
 
   String get id => carparkNo;
@@ -105,7 +113,7 @@ class CarparkDataHandler extends Carpark{
     required String freeParking,
     required String nightParking,
     required String carparkBasement,
-    required GeoPoint location,
+    required GeoFirePoint location,
     required this.carparkDecks,
     required this.gantryHeight
   }):
@@ -144,7 +152,7 @@ class CarparkDataHandler extends Carpark{
     carparkConst.freeParking: freeParking,
     carparkConst.nightParking: nightParking,
     carparkConst.carparkBasement: carparkBasement,
-    carparkConst.location: location,
+    carparkConst.location: location!.data,
     carparkConst.carparkDecks: carparkDecks,
     carparkConst.gantryHeight: gantryHeight
   };

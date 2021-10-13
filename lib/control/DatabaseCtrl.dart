@@ -1,15 +1,39 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../constants/databaseConsts.dart';
 import '../entities/all.dart';
 
+void main() => runApp(MaterialApp(
+    home: TextButton(
+      child: Text("Test function"),
+      onPressed: () => test(),
+    )
+)
+);
+
+test () async {
+  await Firebase.initializeApp();
+  DatabaseCtrl test = DatabaseCtrl();
+  var result = await test.getNearbyCarparks(1.307778, 103.930278, 1);
+  print("back in test");
+  print(result);
+}
+
+
 class DatabaseCtrl{
   static const String _carparkInfoID = "139a3035-e624-4f56-b63f-89ae28d4ae4c";
 
-  static late CollectionReference carparkInfoCollection;
+  late CollectionReference carparkInfoCollection;
   late CollectionReference userCollection;
+
+  late Geoflutterfire geo;
 
   DatabaseCtrl(){
     carparkInfoCollection = FirebaseFirestore.instance
@@ -19,6 +43,8 @@ class DatabaseCtrl{
           toFirestore: (object, _) => (object as CarparkDataHandler).toJson()
         );
     userCollection = FirebaseFirestore.instance.collection(userConst.collectionName);
+
+    geo = Geoflutterfire();
   }
 
   Future<Map> _ckanQuery({String resourceID = _carparkInfoID, int? limit, int? offset}) async{
@@ -42,36 +68,59 @@ class DatabaseCtrl{
 
   Future<Carpark> getCarpark(String carparkNo) async => await _getDocument(carparkInfoCollection, carparkNo) as Carpark;
 
- static Future<List<Carpark>> getAllCarparks() async{
+  Future<List<Carpark>> getAllCarparks() async{
     List<QueryDocumentSnapshot> carparkDocs = await carparkInfoCollection.get().then((snapshot) => snapshot.docs);
     List<Carpark> carparks = [];
     for (int i=0; i<carparkDocs.length; i++) carparks.add(carparkDocs[i].data() as Carpark);
     return carparks;
   }
+  
+  Future<List<Carpark>> getNearbyCarparks(double latitude, double longitude, [double radius = 1]) async{
+    GeoFirePoint center = geo.point(latitude: latitude, longitude: longitude);
+    CollectionReference collection = FirebaseFirestore.instance.collection(carparkConst.collectionName);
+    Stream stream = geo
+        .collection(collectionRef: collection)
+        .within(center: center, radius: radius, field: "location");
+    await for (List<DocumentSnapshot> snapshots in stream){
+      List<Carpark> carparks = [];
+      Carpark carpark;
+      for (DocumentSnapshot snapshot in snapshots){
+        carpark = Carpark.fromJson(snapshot.id, snapshot.data() as Map);
+        carparks.add(carpark);
+      }
+      return carparks;
+    }
+    return [];
+  }
+
 
   Future<void> updateCarparkInfo() async{
     // Get number of rows
-    Map result = await _ckanQuery();
+    Map result = await _ckanQuery(limit: 3000);
     // get data
     List data = result["records"];
 
     // Update database
     Map latLong;
-    GeoPoint location;
+    GeoFirePoint location;
     Map dataRow;
     for (var i=0; i<data.length; i++){
       dataRow = data[i];
 
       // Format data
       Map latLong = await _gridToLatLong(dataRow[carparkInfoConst.xCoord], dataRow[carparkInfoConst.yCoord]);
-      location = GeoPoint(latLong["latitude"], latLong["longitude"]);
+      location = geo.point(latitude: latLong["latitude"], longitude: latLong["longitude"]);
       dataRow[carparkConst.location] = location;
       CarparkDataHandler carpark = CarparkDataHandler.fromJson(dataRow);
 
       // if document exists in collection, update document
       // else, add document
       await carparkInfoCollection.doc(carpark.id).set(carpark);
+
+      print("updated carpark ${(i+1).toString()}");
     }
+
+    print("update completed");
   }
 
   Future<UserAccount> getUser(String uid) async{

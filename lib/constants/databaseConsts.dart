@@ -12,6 +12,7 @@ class carparkConst{
   static const String parkingSystem = "parkingSystem";
   static const String shortTermParking = "shortTermParking";
   static const String location = "location";
+  static const String geoPoint = "geopoint";
 }
 
 class userConst{
