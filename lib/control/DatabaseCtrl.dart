@@ -68,7 +68,8 @@ class DatabaseCtrl{
 
   Future<Carpark> getCarpark(String carparkNo) async => await _getDocument(carparkInfoCollection, carparkNo) as Carpark;
 
-  Future<List<Carpark>> getAllCarparks() async{
+
+ Future<List<Carpark>> getAllCarparks() async{
     List<QueryDocumentSnapshot> carparkDocs = await carparkInfoCollection.get().then((snapshot) => snapshot.docs);
     List<Carpark> carparks = [];
     for (int i=0; i<carparkDocs.length; i++) carparks.add(carparkDocs[i].data() as Carpark);
