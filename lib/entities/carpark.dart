@@ -20,6 +20,7 @@ class Carpark{
   String nightParking;
   String carparkBasement;
   GeoFirePoint? location;
+  int? availableLots;
 
   Carpark({
     required this.carparkNo,
