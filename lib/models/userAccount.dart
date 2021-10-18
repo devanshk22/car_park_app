@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../entities/booking.dart';
 import '../entities/carpark.dart';
 import '../constants/databaseConsts.dart';
+import 'package:car_park_app/control/DatabaseCtrl.dart';
 
 class UserAccount {
   late String uid;
@@ -11,6 +12,7 @@ class UserAccount {
   late String phone = "";
   late List<Booking> bookings = [];
   late List<Carpark> favourites = [];
+  DatabaseCtrl databaseCtrl = new DatabaseCtrl();
 
   UserAccount(
       {required this.uid, String? email, String? fullName, String? phone}) {
@@ -98,5 +100,36 @@ class UserAccount {
 
   void setPhone(String phone) {
     this.phone = phone;
+  }
+
+  List<Carpark> getUserFavourites() {
+    return this.favourites;
+  }
+
+  void setFavourite(String carpark_num) async {
+    DatabaseCtrl db = this.databaseCtrl;
+    Carpark toAdd = await db.getCarpark(carpark_num);
+    this.favourites.add(toAdd);
+  }
+
+  void removeFavourite(String carpark_num) async {
+    DatabaseCtrl db = this.databaseCtrl;
+    Carpark toRemove = await db.getCarpark(carpark_num);
+    try {
+      this.favourites.remove(toRemove);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  List<Booking> getHistory() {
+    List<Booking> all_bookings = this.bookings;
+    List<Booking> history = [];
+    for (var item in all_bookings) {
+      if (item.status == BookingStatus.PAST) {
+        history.add(item);
+      }
+    }
+    return history;
   }
 }
