@@ -24,8 +24,8 @@ class _myBottomNavigationBarState extends State<myBottomNavigationBar> {
   int _selectedIndex = 0;
   final List<Widget> children = [
     HomeUI(),
-    //InfoUI(),
-    HistoryUI(),
+    MapUI(),
+    SearchResultUI(),
     FavouritesUI(),
     MyAccountUI(),
   ];
@@ -52,12 +52,12 @@ class _myBottomNavigationBarState extends State<myBottomNavigationBar> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car_rounded),
-            label: 'Info',
+            icon: Icon(Icons.map),
+            label: 'Map',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_outline_outlined),

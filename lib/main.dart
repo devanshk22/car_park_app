@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           '/favourites': (context) => myBottomNavigationBar(),
           '/myaccount': (context) => myBottomNavigationBar(),
           '/forgotpassword': (context) => ForgotPasswordUI(),
-          '/map': (context) => MapUI(),
+          '/map': (context) => myBottomNavigationBar(),
           '/registration': (context) => RegistrationUI(),
           '/searchresult': (context) => SearchResultUI(),
           '/wrapper': (context) => Wrapper(),

@@ -23,7 +23,7 @@ class _InfoCardState extends State<InfoCard> {
   Widget build(BuildContext context) {
     return Container(
       width: getScreenWidth(context) - 2 * screenGap,
-      height: 0.7 * getScreenHeight(context),
+      height: 0.8 * getScreenHeight(context),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -31,7 +31,7 @@ class _InfoCardState extends State<InfoCard> {
             left: 0,
             child: Container(
               width: getScreenWidth(context) - 2 * screenGap,
-              height: 0.7 * getScreenHeight(context),
+              height: 0.8 * getScreenHeight(context),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15),
@@ -146,7 +146,7 @@ Car Park Basement: ${widget.carpark.carparkBasement}
               style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Roboto',
-                  fontSize: 14,
+                  fontSize: 16,
                   letterSpacing:
                       0 /*percentages not used in flutter. defaulting to zero*/,
                   fontWeight: FontWeight.normal,
