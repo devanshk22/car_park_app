@@ -1,10 +1,14 @@
 import 'package:car_park_app/control/CarparkCtrl.dart';
 import 'package:car_park_app/entities/carpark.dart';
+import 'package:car_park_app/pages/FavouritesUI.dart';
+import 'package:car_park_app/widgets/HomeNavCard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 import 'package:car_park_app/pages/services/auth.dart';
 import 'package:car_park_app/widgets/CarparkCard.dart';
+
+import 'MapUI.dart';
 
 class HomeUI extends StatefulWidget {
   const HomeUI({Key? key}) : super(key: key);
@@ -39,19 +43,68 @@ class _HomeUIState extends State<HomeUI> {
         future: getCarpark(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done)
-            return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  return Container(
+            return SingleChildScrollView(
+              physics: ScrollPhysics(),
+              child: Column(
+                children: <Widget>[
+                  Container(
                     padding: EdgeInsets.fromLTRB(
-                        screenGap, cardGap, screenGap, cardGap),
-                    child: CarparkCard(
-                      carpark: snapshot.data[index],
-                      kmAway: 0.4,
-                      isFavourite: true,
+                        screenGap, 2 * cardGap, screenGap, cardGap),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        HomeNavCard(
+                            icon: Icon(
+                              Icons.map,
+                              color: Colors.orange[700],
+                            ),
+                            text: 'Open Map',
+                            page: MapUI()),
+                        HomeNavCard(
+                            icon: Icon(
+                              Icons.favorite_border,
+                              color: Colors.orange[700],
+                            ),
+                            text: 'My Favourites',
+                            page: FavouritesUI())
+                      ],
                     ),
-                  );
-                });
+                  ),
+                  Container(
+                    alignment: Alignment.bottomLeft,
+                    padding: EdgeInsets.fromLTRB(
+                        screenGap, 2 * cardGap, screenGap, cardGap),
+                    child: Text(
+                      'Nearby Car Parks',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Roboto',
+                          fontSize: 20,
+                          letterSpacing:
+                              0 /*percentages not used in flutter. defaulting to zero*/,
+                          fontWeight: FontWeight.normal,
+                          height: 1),
+                    ),
+                  ),
+                  ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding: EdgeInsets.fromLTRB(
+                              screenGap, cardGap, screenGap, cardGap),
+                          child: CarparkCard(
+                            carpark: snapshot.data[index],
+                            kmAway: 0.4,
+                            isFavourite: true,
+                          ),
+                        );
+                      }),
+                ],
+              ),
+            );
           else
             return Center(child: CircularProgressIndicator());
         },

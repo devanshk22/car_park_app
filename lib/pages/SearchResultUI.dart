@@ -18,7 +18,7 @@ class _SearchResultUIState extends State<SearchResultUI> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        title: Text('Search Result'),
+        title: Text('Search'),
         centerTitle: true,
         backgroundColor: Colors.grey[850],
       ),

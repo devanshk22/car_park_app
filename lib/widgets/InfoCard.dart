@@ -5,13 +5,11 @@ import 'package:car_park_app/constants/app_constants.dart';
 
 class InfoCard extends StatefulWidget {
   final Carpark carpark;
-  int slotsAvailable;
   double kmAway;
 
   InfoCard({
     required this.carpark,
     required this.kmAway,
-    required this.slotsAvailable,
   });
 
   @override
@@ -23,7 +21,7 @@ class _InfoCardState extends State<InfoCard> {
   Widget build(BuildContext context) {
     return Container(
       width: getScreenWidth(context) - 2 * screenGap,
-      height: 0.8 * getScreenHeight(context),
+      height: 0.75 * getScreenHeight(context),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -31,7 +29,7 @@ class _InfoCardState extends State<InfoCard> {
             left: 0,
             child: Container(
               width: getScreenWidth(context) - 2 * screenGap,
-              height: 0.8 * getScreenHeight(context),
+              height: 0.75 * getScreenHeight(context),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15),
@@ -79,8 +77,8 @@ class _InfoCardState extends State<InfoCard> {
             top: 72,
             left: 15,
             child: Text(
-              widget.slotsAvailable > 0
-                  ? '${widget.slotsAvailable} Slots Available'
+              (widget.carpark).availableLots != 0
+                  ? '${(widget.carpark).availableLots} Slots Available'
                   : 'No Slots Available',
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -185,35 +183,42 @@ Car Park Basement: ${widget.carpark.carparkBasement}
               ),
             ),
           ),
-          // Positioned(
-          //   bottom: 30,
-          //   child: Container(
-          //     width: getScreenWidth(context) - 2 * screenGap,
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.center,
-          //       children: <Widget>[
-          //         SizedBox(
-          //           width: getScreenWidth(context) - 100,
-          //           height: 60,
-          //           child: ElevatedButton(
-          //             onPressed: () {},
-          //             child: Text('Choose Parking Time'),
-          //             style: ButtonStyle(
-          //               shape:
-          //                   MaterialStateProperty.all<RoundedRectangleBorder>(
-          //                 RoundedRectangleBorder(
-          //                   borderRadius: BorderRadius.circular(30.0),
-          //                 ),
-          //               ),
-          //               backgroundColor:
-          //                   MaterialStateProperty.all<Color>(Colors.pink),
-          //             ),
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
+          Positioned(
+            bottom: 105,
+            child: Container(
+              width: getScreenWidth(context) - 2 * screenGap,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    width: getScreenWidth(context) - 100,
+                    height: 60,
+                    child: TextButton.icon(
+                      onPressed: () {},
+                      label: Text(
+                        'Add to Favorites',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      icon: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      ),
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.pink),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -19,16 +19,15 @@ class _InfoUIState extends State<InfoUI> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        title: Text('Booking'),
+        title: Text('Car Park Information'),
         centerTitle: true,
         backgroundColor: Colors.grey[850],
       ),
       body: Container(
         // TODO: generate list view with CarparkCtrl
-        padding: EdgeInsets.fromLTRB(screenGap, 45, screenGap, 45),
+        padding: EdgeInsets.fromLTRB(screenGap, 60, screenGap, 60),
         child: InfoCard(
           carpark: widget.carpark,
-          slotsAvailable: 1,
           kmAway: 0.4,
         ),
       ),
