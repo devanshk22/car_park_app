@@ -36,7 +36,6 @@ class _SearchResultUIState extends State<SearchResultUI> {
                     child: HomeCard(
                       carpark: snapshot.data[index],
                       kmAway: 0.4,
-                      isBooked: true,
                       isFavourite: true,
                     ),
                   );

@@ -49,7 +49,6 @@ class _HomeUIState extends State<HomeUI> {
                     child: HomeCard(
                       carpark: snapshot.data[index],
                       kmAway: 0.4,
-                      isBooked: true,
                       isFavourite: true,
                     ),
                   );

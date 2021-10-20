@@ -3,25 +3,22 @@ import 'package:car_park_app/pages/MapUI.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 
-class BookingCard extends StatefulWidget {
-  final String carparkName;
+class InfoCard extends StatefulWidget {
+  final Carpark carpark;
   int slotsAvailable;
   double kmAway;
-  bool isBooked;
-  Carpark carpark;
 
-  BookingCard(
-      {required this.carparkName,
-      required this.kmAway,
-      required this.slotsAvailable,
-      required this.isBooked,
-      required this.carpark});
+  InfoCard({
+    required this.carpark,
+    required this.kmAway,
+    required this.slotsAvailable,
+  });
 
   @override
-  _BookingCardState createState() => _BookingCardState();
+  _InfoCardState createState() => _InfoCardState();
 }
 
-class _BookingCardState extends State<BookingCard> {
+class _InfoCardState extends State<InfoCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,7 +47,7 @@ class _BookingCardState extends State<BookingCard> {
             top: 30,
             left: 15,
             child: Text(
-              '${widget.carparkName}',
+              '${(widget.carpark).address}',
               textAlign: TextAlign.left,
               style: TextStyle(
                   color: Colors.white,
@@ -82,11 +79,9 @@ class _BookingCardState extends State<BookingCard> {
             top: 72,
             left: 15,
             child: Text(
-              widget.isBooked == true
-                  ? 'Booked'
-                  : widget.slotsAvailable > 0
-                      ? '${widget.slotsAvailable} Slots Available'
-                      : 'No Slots Available',
+              widget.slotsAvailable > 0
+                  ? '${widget.slotsAvailable} Slots Available'
+                  : 'No Slots Available',
               textAlign: TextAlign.left,
               style: TextStyle(
                   color: Colors.white,
@@ -159,7 +154,7 @@ Car Park Basement: ${widget.carpark.carparkBasement}
             ),
           ),
           Positioned(
-            bottom: 105,
+            bottom: 30,
             child: Container(
               width: getScreenWidth(context) - 2 * screenGap,
               child: Column(
@@ -190,35 +185,35 @@ Car Park Basement: ${widget.carpark.carparkBasement}
               ),
             ),
           ),
-          Positioned(
-            bottom: 30,
-            child: Container(
-              width: getScreenWidth(context) - 2 * screenGap,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: getScreenWidth(context) - 100,
-                    height: 60,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Choose Parking Time'),
-                      style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                        ),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.pink),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Positioned(
+          //   bottom: 30,
+          //   child: Container(
+          //     width: getScreenWidth(context) - 2 * screenGap,
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: <Widget>[
+          //         SizedBox(
+          //           width: getScreenWidth(context) - 100,
+          //           height: 60,
+          //           child: ElevatedButton(
+          //             onPressed: () {},
+          //             child: Text('Choose Parking Time'),
+          //             style: ButtonStyle(
+          //               shape:
+          //                   MaterialStateProperty.all<RoundedRectangleBorder>(
+          //                 RoundedRectangleBorder(
+          //                   borderRadius: BorderRadius.circular(30.0),
+          //                 ),
+          //               ),
+          //               backgroundColor:
+          //                   MaterialStateProperty.all<Color>(Colors.pink),
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

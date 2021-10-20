@@ -11,8 +11,6 @@ import 'package:car_park_app/pages/myBottomNavigationBar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -34,7 +32,7 @@ class MyApp extends StatelessWidget {
           //'/': (context) => LoginUI(),
           '/bottomnavbar': (context) => myBottomNavigationBar(),
           '/home': (context) => myBottomNavigationBar(),
-          '/booking': (context) => myBottomNavigationBar(),
+          '/info': (context) => myBottomNavigationBar(),
           '/history': (context) => myBottomNavigationBar(),
           '/favourites': (context) => myBottomNavigationBar(),
           '/myaccount': (context) => myBottomNavigationBar(),

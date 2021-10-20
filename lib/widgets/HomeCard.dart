@@ -5,14 +5,10 @@ import 'package:car_park_app/constants/app_constants.dart';
 class HomeCard extends StatefulWidget {
   final Carpark carpark;
   double kmAway;
-  bool isBooked;
   bool isFavourite;
 
   HomeCard(
-      {required this.carpark,
-      required this.kmAway,
-      required this.isBooked,
-      required this.isFavourite});
+      {required this.carpark, required this.kmAway, required this.isFavourite});
 
   @override
   _HomeCardState createState() => _HomeCardState();
@@ -79,11 +75,9 @@ class _HomeCardState extends State<HomeCard> {
             bottom: 15,
             left: 15,
             child: Text(
-              widget.isBooked == true
-                  ? 'Booked'
-                  : (widget.carpark).availableLots != 0
-                      ? '${(widget.carpark).availableLots} Slots Available'
-                      : 'No Slots Available',
+              (widget.carpark).availableLots != 0
+                  ? '${(widget.carpark).availableLots} Slots Available'
+                  : 'No Slots Available',
               textAlign: TextAlign.left,
               style: TextStyle(
                   color: Colors.white,
