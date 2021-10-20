@@ -1,3 +1,6 @@
+import 'package:car_park_app/control/CarparkCtrl.dart';
+import 'package:car_park_app/entities/carpark.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 import 'package:car_park_app/pages/services/auth.dart';
@@ -32,17 +35,36 @@ class _HomeUIState extends State<HomeUI> {
         ],
         automaticallyImplyLeading: false,
       ),
-      body: Container(
-        // TODO: generate list view with CarparkCtrl
-        padding: EdgeInsets.all(screenGap),
-        child: HomeCard(
-          carparkName: 'BLK 232 BRAS BASAH BASEMENT CAR PARK',
-          slotsAvailable: 1,
-          kmAway: 0.4,
-          isBooked: true,
-          isFavourite: true,
-        ),
+      body: FutureBuilder(
+        future: getCarpark(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done)
+            return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    // TODO: generate list view with CarparkCtrl
+                    padding: EdgeInsets.fromLTRB(
+                        screenGap, cardGap, screenGap, cardGap),
+                    child: HomeCard(
+                      carpark: snapshot.data[index],
+                      kmAway: 0.4,
+                      isBooked: true,
+                      isFavourite: true,
+                    ),
+                  );
+                });
+          else
+            return Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
+}
+
+Future<List<Carpark>> getCarpark() async {
+  await Firebase.initializeApp();
+  CarparkCtrl homeList = CarparkCtrl();
+  var output = await homeList.getNearbyAvailableCarparks();
+  return output;
 }

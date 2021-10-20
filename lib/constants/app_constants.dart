@@ -14,5 +14,5 @@ double getScreenHeightExcludeSafeArea(BuildContext context) {
   return height - padding.top - padding.bottom;
 }
 
-const double screenGap = 20;
+const double screenGap = 15;
 const double cardGap = 10;

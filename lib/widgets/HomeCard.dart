@@ -1,17 +1,16 @@
+import 'package:car_park_app/entities/carpark.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 
 class HomeCard extends StatefulWidget {
-  final String carparkName;
-  int slotsAvailable;
+  final Carpark carpark;
   double kmAway;
   bool isBooked;
   bool isFavourite;
 
   HomeCard(
-      {required this.carparkName,
+      {required this.carpark,
       required this.kmAway,
-      required this.slotsAvailable,
       required this.isBooked,
       required this.isFavourite});
 
@@ -48,7 +47,7 @@ class _HomeCardState extends State<HomeCard> {
             top: 15,
             left: 15,
             child: Text(
-              '${widget.carparkName}',
+              '${(widget.carpark).address}',
               textAlign: TextAlign.left,
               style: TextStyle(
                   color: Colors.white,
@@ -82,8 +81,8 @@ class _HomeCardState extends State<HomeCard> {
             child: Text(
               widget.isBooked == true
                   ? 'Booked'
-                  : widget.slotsAvailable > 0
-                      ? '${widget.slotsAvailable} Slots Available'
+                  : (widget.carpark).availableLots != 0
+                      ? '${(widget.carpark).availableLots} Slots Available'
                       : 'No Slots Available',
               textAlign: TextAlign.left,
               style: TextStyle(
