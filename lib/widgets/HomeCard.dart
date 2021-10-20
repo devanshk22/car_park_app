@@ -1,4 +1,5 @@
 import 'package:car_park_app/entities/carpark.dart';
+import 'package:car_park_app/pages/InfoUI.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 
@@ -25,17 +26,26 @@ class _HomeCardState extends State<HomeCard> {
           Positioned(
             top: 0,
             left: 0,
-            child: Container(
-              width: getScreenWidth(context) - 2 * screenGap,
-              height: 90,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => InfoUI(carpark: widget.carpark)),
+                );
+              },
+              child: Container(
+                width: getScreenWidth(context) - 2 * screenGap,
+                height: 90,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  color: Color.fromRGBO(48, 48, 48, 1),
                 ),
-                color: Color.fromRGBO(48, 48, 48, 1),
               ),
             ),
           ),

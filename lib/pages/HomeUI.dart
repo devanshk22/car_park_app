@@ -43,7 +43,6 @@ class _HomeUIState extends State<HomeUI> {
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    // TODO: generate list view with CarparkCtrl
                     padding: EdgeInsets.fromLTRB(
                         screenGap, cardGap, screenGap, cardGap),
                     child: HomeCard(

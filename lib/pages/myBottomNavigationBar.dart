@@ -24,7 +24,7 @@ class _myBottomNavigationBarState extends State<myBottomNavigationBar> {
   int _selectedIndex = 0;
   final List<Widget> children = [
     HomeUI(),
-    InfoUI(),
+    //InfoUI(),
     HistoryUI(),
     FavouritesUI(),
     MyAccountUI(),
