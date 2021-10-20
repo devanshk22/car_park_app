@@ -3,7 +3,7 @@ import 'package:car_park_app/entities/all.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
-import 'package:car_park_app/widgets/HomeCard.dart';
+import 'package:car_park_app/widgets/CarparkCard.dart';
 
 class SearchResultUI extends StatefulWidget {
   const SearchResultUI({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class _SearchResultUIState extends State<SearchResultUI> {
                     // TODO: generate list view with CarparkCtrl
                     padding: EdgeInsets.fromLTRB(
                         screenGap, cardGap, screenGap, cardGap),
-                    child: HomeCard(
+                    child: CarparkCard(
                       carpark: snapshot.data[index],
                       kmAway: 0.4,
                       isFavourite: true,
@@ -50,7 +50,7 @@ class _SearchResultUIState extends State<SearchResultUI> {
 
 Future<List<Carpark>> getCarpark() async {
   await Firebase.initializeApp();
-  CarparkCtrl homeList = CarparkCtrl();
-  var output = await homeList.getNearbyAvailableCarparks();
+  CarparkCtrl searchResultList = CarparkCtrl();
+  var output = await searchResultList.getNearbyAvailableCarparks();
   return output;
 }

@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 import 'package:car_park_app/pages/services/auth.dart';
-import 'package:car_park_app/widgets/HomeCard.dart';
+import 'package:car_park_app/widgets/CarparkCard.dart';
 
 class HomeUI extends StatefulWidget {
   const HomeUI({Key? key}) : super(key: key);
@@ -45,7 +45,7 @@ class _HomeUIState extends State<HomeUI> {
                   return Container(
                     padding: EdgeInsets.fromLTRB(
                         screenGap, cardGap, screenGap, cardGap),
-                    child: HomeCard(
+                    child: CarparkCard(
                       carpark: snapshot.data[index],
                       kmAway: 0.4,
                       isFavourite: true,

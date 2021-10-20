@@ -3,19 +3,23 @@ import 'package:car_park_app/pages/InfoUI.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 
-class HomeCard extends StatefulWidget {
+class CarparkCard extends StatefulWidget {
   final Carpark carpark;
   double kmAway;
   bool isFavourite;
 
-  HomeCard(
+  void toggleFavourite() {
+    this.isFavourite = !this.isFavourite;
+  }
+
+  CarparkCard(
       {required this.carpark, required this.kmAway, required this.isFavourite});
 
   @override
-  _HomeCardState createState() => _HomeCardState();
+  _CarparkCardState createState() => _CarparkCardState();
 }
 
-class _HomeCardState extends State<HomeCard> {
+class _CarparkCardState extends State<CarparkCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -102,11 +106,18 @@ class _HomeCardState extends State<HomeCard> {
           Positioned(
             top: 15,
             right: 15,
-            child: Icon(
-              widget.isFavourite == true
-                  ? Icons.favorite
-                  : Icons.favorite_border,
-              color: Colors.pink,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  widget.toggleFavourite();
+                });
+              },
+              child: Icon(
+                widget.isFavourite == true
+                    ? Icons.favorite
+                    : Icons.favorite_border,
+                color: Colors.pink,
+              ),
             ),
           ),
         ],
