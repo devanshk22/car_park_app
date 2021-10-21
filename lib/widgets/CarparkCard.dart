@@ -1,5 +1,9 @@
+import 'package:car_park_app/control/DatabaseCtrl.dart';
 import 'package:car_park_app/entities/carpark.dart';
+import 'package:car_park_app/models/userAccount.dart';
 import 'package:car_park_app/pages/InfoUI.dart';
+import 'package:car_park_app/utilities/favouritesMgr.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 
@@ -9,15 +13,12 @@ class CarparkCard extends StatefulWidget {
   double lng;
   bool isFavourite;
 
-  void toggleFavourite() {
-    this.isFavourite = !this.isFavourite;
-  }
-
-  CarparkCard(
-      {required this.carpark,
-      required this.lat,
-      required this.lng,
-      required this.isFavourite});
+  CarparkCard({
+    required this.carpark,
+    required this.lat,
+    required this.lng,
+    required this.isFavourite,
+  });
 
   @override
   _CarparkCardState createState() => _CarparkCardState();
@@ -108,22 +109,27 @@ class _CarparkCardState extends State<CarparkCard> {
             ),
           ),
           Positioned(
-            top: 15,
-            right: 15,
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  widget.toggleFavourite();
-                });
-              },
-              child: Icon(
-                widget.isFavourite == true
-                    ? Icons.favorite
-                    : Icons.favorite_border,
-                color: Colors.pink,
-              ),
-            ),
-          ),
+              top: 15,
+              right: 15,
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    if (widget.isFavourite == true) {
+                      removeCarparkFavourite(widget.carpark);
+                      widget.isFavourite = !widget.isFavourite;
+                    } else {
+                      setCarparkFavourite(widget.carpark);
+                      widget.isFavourite = !widget.isFavourite;
+                    }
+                  });
+                },
+                child: Icon(
+                  widget.isFavourite == true
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color: Colors.pink,
+                ),
+              )),
         ],
       ),
     );

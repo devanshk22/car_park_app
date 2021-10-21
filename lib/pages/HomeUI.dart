@@ -1,5 +1,6 @@
 import 'package:car_park_app/pages/FavouritesUI.dart';
-import 'package:car_park_app/utilities/nearbyCarparks.dart';
+import 'package:car_park_app/utilities/favouritesMgr.dart';
+import 'package:car_park_app/utilities/locationMgr.dart';
 import 'package:car_park_app/widgets/HomeNavCard.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
@@ -93,11 +94,21 @@ class _HomeUIState extends State<HomeUI> {
                         return Container(
                           padding: EdgeInsets.fromLTRB(
                               screenGap, cardGap, screenGap, cardGap),
-                          child: CarparkCard(
-                            carpark: snapshot.data[0][index],
-                            lat: snapshot.data[1].latitude,
-                            lng: snapshot.data[1].longitude,
-                            isFavourite: true,
+                          child: FutureBuilder(
+                            future: checkFavourite(snapshot.data[0][index]),
+                            builder: (BuildContext context,
+                                AsyncSnapshot snapshot2) {
+                              if (snapshot2.connectionState ==
+                                  ConnectionState.done)
+                                return CarparkCard(
+                                  carpark: snapshot.data[0][index],
+                                  lat: snapshot.data[1].latitude,
+                                  lng: snapshot.data[1].longitude,
+                                  isFavourite: snapshot2.data,
+                                );
+                              else
+                                return Container();
+                            },
                           ),
                         );
                       }),

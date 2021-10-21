@@ -110,13 +110,15 @@ class UserAccount {
     DatabaseCtrl db = this.databaseCtrl;
     Carpark toAdd = await db.getCarpark(carpark_num);
     this.favourites.add(toAdd);
+    db.updateFavourites(this);
   }
 
   void removeFavourite(String carpark_num) async {
     DatabaseCtrl db = this.databaseCtrl;
-    Carpark toRemove = await db.getCarpark(carpark_num);
     try {
-      this.favourites.remove(toRemove);
+      for (var i = 0; i < favourites.length; i++)
+        if (favourites[i].carparkNo == carpark_num) favourites.removeAt(i);
+      db.removeFavourites(this);
     } catch (e) {
       print(e);
     }

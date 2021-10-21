@@ -1,4 +1,4 @@
-import 'package:car_park_app/utilities/nearbyCarparks.dart';
+import 'package:car_park_app/utilities/locationMgr.dart';
 import 'package:car_park_app/widgets/CarparkCard.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
