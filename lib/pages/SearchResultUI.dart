@@ -1,6 +1,4 @@
-import 'package:car_park_app/control/CarparkCtrl.dart';
-import 'package:car_park_app/entities/all.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:car_park_app/utilities/nearbyCarparks.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 import 'package:car_park_app/widgets/CarparkCard.dart';
@@ -23,19 +21,19 @@ class _SearchResultUIState extends State<SearchResultUI> {
         backgroundColor: Colors.grey[850],
       ),
       body: FutureBuilder(
-        future: getCarpark(),
+        future: Future.wait([getNearbyCarpark(), getPosition()]),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done)
             return ListView.builder(
-                itemCount: snapshot.data.length,
+                itemCount: snapshot.data[0].length,
                 itemBuilder: (context, index) {
                   return Container(
-                    // TODO: generate list view with CarparkCtrl
                     padding: EdgeInsets.fromLTRB(
                         screenGap, cardGap, screenGap, cardGap),
                     child: CarparkCard(
-                      carpark: snapshot.data[index],
-                      kmAway: 0.4,
+                      carpark: snapshot.data[0][index],
+                      lat: snapshot.data[1].latitude,
+                      lng: snapshot.data[1].longitude,
                       isFavourite: true,
                     ),
                   );
@@ -46,11 +44,4 @@ class _SearchResultUIState extends State<SearchResultUI> {
       ),
     );
   }
-}
-
-Future<List<Carpark>> getCarpark() async {
-  await Firebase.initializeApp();
-  CarparkCtrl searchResultList = CarparkCtrl();
-  var output = await searchResultList.getNearbyAvailableCarparks();
-  return output;
 }

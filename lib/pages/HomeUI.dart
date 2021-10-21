@@ -1,8 +1,6 @@
-import 'package:car_park_app/control/CarparkCtrl.dart';
-import 'package:car_park_app/entities/carpark.dart';
 import 'package:car_park_app/pages/FavouritesUI.dart';
+import 'package:car_park_app/utilities/nearbyCarparks.dart';
 import 'package:car_park_app/widgets/HomeNavCard.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 import 'package:car_park_app/pages/services/auth.dart';
@@ -40,7 +38,7 @@ class _HomeUIState extends State<HomeUI> {
         automaticallyImplyLeading: false,
       ),
       body: FutureBuilder(
-        future: getCarpark(),
+        future: Future.wait([getNearbyCarpark(), getPosition()]),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done)
             return SingleChildScrollView(
@@ -90,14 +88,15 @@ class _HomeUIState extends State<HomeUI> {
                   ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: snapshot.data.length,
+                      itemCount: snapshot.data[0].length,
                       itemBuilder: (context, index) {
                         return Container(
                           padding: EdgeInsets.fromLTRB(
                               screenGap, cardGap, screenGap, cardGap),
                           child: CarparkCard(
-                            carpark: snapshot.data[index],
-                            kmAway: 0.4,
+                            carpark: snapshot.data[0][index],
+                            lat: snapshot.data[1].latitude,
+                            lng: snapshot.data[1].longitude,
                             isFavourite: true,
                           ),
                         );
@@ -111,11 +110,4 @@ class _HomeUIState extends State<HomeUI> {
       ),
     );
   }
-}
-
-Future<List<Carpark>> getCarpark() async {
-  await Firebase.initializeApp();
-  CarparkCtrl homeList = CarparkCtrl();
-  var output = await homeList.getNearbyAvailableCarparks();
-  return output;
 }

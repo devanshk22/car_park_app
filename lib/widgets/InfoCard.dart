@@ -92,7 +92,7 @@ class _InfoCardState extends State<InfoCard> {
             ),
           ),
           Positioned(
-            top: 102,
+            top: 107,
             left: 15,
             child: Text(
               widget.carpark.carparkNo == 'ACB' ||
@@ -115,12 +115,12 @@ class _InfoCardState extends State<InfoCard> {
 \$1.20 per half-hour (7:00 - 17:00, Monday to Saturday)
 \$0.60 per half-hour (Other hours)
                 '''
-                  : '0.60 per half-hour (Other hours)',
+                  : '0.60 per half-hour',
               textAlign: TextAlign.left,
               style: TextStyle(
-                  color: Colors.amber,
+                  color: Colors.orange[700],
                   fontFamily: 'Roboto',
-                  fontSize: 10,
+                  fontSize: 13,
                   letterSpacing:
                       0 /*percentages not used in flutter. defaulting to zero*/,
                   fontWeight: FontWeight.normal,
@@ -128,7 +128,7 @@ class _InfoCardState extends State<InfoCard> {
             ),
           ),
           Positioned(
-            top: 147,
+            top: 162,
             left: 15,
             child: Text(
               '''

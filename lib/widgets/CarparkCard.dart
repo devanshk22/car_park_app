@@ -5,7 +5,8 @@ import 'package:car_park_app/constants/app_constants.dart';
 
 class CarparkCard extends StatefulWidget {
   final Carpark carpark;
-  double kmAway;
+  double lat;
+  double lng;
   bool isFavourite;
 
   void toggleFavourite() {
@@ -13,7 +14,10 @@ class CarparkCard extends StatefulWidget {
   }
 
   CarparkCard(
-      {required this.carpark, required this.kmAway, required this.isFavourite});
+      {required this.carpark,
+      required this.lat,
+      required this.lng,
+      required this.isFavourite});
 
   @override
   _CarparkCardState createState() => _CarparkCardState();
@@ -73,7 +77,7 @@ class _CarparkCardState extends State<CarparkCard> {
             top: 37,
             left: 15,
             child: Text(
-              '${widget.kmAway} km away',
+              '${widget.carpark.location!.distance(lat: widget.lat, lng: widget.lng)} km away',
               textAlign: TextAlign.left,
               style: TextStyle(
                   color: Colors.amber,
