@@ -105,7 +105,6 @@ class _FavouritesUIState extends State<FavouritesUI> {
                               return SizedBox.shrink();
                             else
                               return SizedBox.shrink();
-                            ;
                           },
                         );
                       }),

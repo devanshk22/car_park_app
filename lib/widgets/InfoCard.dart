@@ -1,15 +1,18 @@
 import 'package:car_park_app/entities/carpark.dart';
 import 'package:car_park_app/pages/MapUI.dart';
+import 'package:car_park_app/pages/myBottomNavigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 
 class InfoCard extends StatefulWidget {
   final Carpark carpark;
-  double kmAway;
+  double lat;
+  double lng;
 
   InfoCard({
     required this.carpark,
-    required this.kmAway,
+    required this.lat,
+    required this.lng,
   });
 
   @override
@@ -21,7 +24,7 @@ class _InfoCardState extends State<InfoCard> {
   Widget build(BuildContext context) {
     return Container(
       width: getScreenWidth(context) - 2 * screenGap,
-      height: 0.75 * getScreenHeight(context),
+      height: 0.70 * getScreenHeight(context),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -29,7 +32,7 @@ class _InfoCardState extends State<InfoCard> {
             left: 0,
             child: Container(
               width: getScreenWidth(context) - 2 * screenGap,
-              height: 0.75 * getScreenHeight(context),
+              height: 0.70 * getScreenHeight(context),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15),
@@ -61,7 +64,7 @@ class _InfoCardState extends State<InfoCard> {
             top: 52,
             left: 15,
             child: Text(
-              '${widget.kmAway} km away',
+              '${widget.carpark.location!.distance(lat: widget.lat, lng: widget.lng)} km away',
               textAlign: TextAlign.left,
               style: TextStyle(
                   color: Colors.amber,
@@ -161,14 +164,22 @@ Car Park Basement: ${widget.carpark.carparkBasement}
                   SizedBox(
                     width: getScreenWidth(context) - 100,
                     height: 60,
-                    child: ElevatedButton(
+                    child: TextButton.icon(
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MapUI()),
+                          MaterialPageRoute(
+                              builder: (context) => myBottomNavigationBar()),
                         );
                       },
-                      child: Text('View on Map'),
+                      label: Text('Back to Home',
+                          style: TextStyle(
+                            color: Colors.white,
+                          )),
+                      icon: Icon(
+                        Icons.home,
+                        color: Colors.white,
+                      ),
                       style: ButtonStyle(
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -176,6 +187,8 @@ Car Park Basement: ${widget.carpark.carparkBasement}
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                         ),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.lightBlue),
                       ),
                     ),
                   ),
@@ -194,13 +207,18 @@ Car Park Basement: ${widget.carpark.carparkBasement}
                     width: getScreenWidth(context) - 100,
                     height: 60,
                     child: TextButton.icon(
-                      onPressed: () {},
-                      label: Text(
-                        'Add to Favorites',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MapUI()),
+                        );
+                      },
+                      label: Text('View on Map',
+                          style: TextStyle(
+                            color: Colors.white,
+                          )),
                       icon: Icon(
-                        Icons.favorite_border,
+                        Icons.map,
                         color: Colors.white,
                       ),
                       style: ButtonStyle(
