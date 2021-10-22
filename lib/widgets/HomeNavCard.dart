@@ -12,7 +12,6 @@ class HomeNavCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 0.52 * getScreenWidth(context) - 2 * screenGap,
       height: 90,
       child: Stack(
         children: <Widget>[

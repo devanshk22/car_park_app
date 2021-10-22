@@ -48,42 +48,84 @@ class _HomeUIState extends State<HomeUI> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(
-                        screenGap, 2 * cardGap, screenGap, cardGap),
+                        screenGap, 2 * cardGap, screenGap, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        HomeNavCard(
-                            icon: Icon(
-                              Icons.map,
-                              color: Colors.orange[700],
-                            ),
-                            text: 'Open Map',
-                            page: MapUI()),
-                        HomeNavCard(
-                            icon: Icon(
-                              Icons.favorite_border,
-                              color: Colors.orange[700],
-                            ),
-                            text: 'My Favourites',
-                            page: FavouritesUI())
+                        Expanded(
+                          flex: 10,
+                          child: HomeNavCard(
+                              icon: Icon(
+                                Icons.map,
+                                color: Colors.orange[700],
+                              ),
+                              text: 'Open Map',
+                              page: MapUI()),
+                        ),
+                        Spacer(
+                          flex: 1,
+                        ),
+                        Expanded(
+                          flex: 10,
+                          child: HomeNavCard(
+                              icon: Icon(
+                                Icons.favorite_border,
+                                color: Colors.orange[700],
+                              ),
+                              text: 'My Favourites',
+                              page: FavouritesUI()),
+                        )
                       ],
                     ),
                   ),
                   Container(
                     alignment: Alignment.bottomLeft,
                     padding: EdgeInsets.fromLTRB(
-                        screenGap, 2 * cardGap, screenGap, cardGap),
-                    child: Text(
-                      'Nearby Car Parks',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                          fontSize: 20,
-                          letterSpacing:
-                              0 /*percentages not used in flutter. defaulting to zero*/,
-                          fontWeight: FontWeight.normal,
-                          height: 1),
+                        1.5 * screenGap, 2 * cardGap, 1.5 * screenGap, cardGap),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'Nearby Car Parks',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Roboto',
+                                fontSize: 20,
+                                letterSpacing:
+                                    0 /*percentages not used in flutter. defaulting to zero*/,
+                                fontWeight: FontWeight.normal,
+                                height: 1),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: TextButton.icon(
+                            onPressed: () {
+                              setState(() {});
+                            },
+                            icon: Icon(
+                              Icons.refresh,
+                              color: Colors.white,
+                            ),
+                            label: Text(
+                              'Refresh',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.lightBlue),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   ListView.builder(
@@ -91,25 +133,25 @@ class _HomeUIState extends State<HomeUI> {
                       shrinkWrap: true,
                       itemCount: snapshot.data[0].length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          padding: EdgeInsets.fromLTRB(
-                              screenGap, cardGap, screenGap, cardGap),
-                          child: FutureBuilder(
-                            future: checkFavourite(snapshot.data[0][index]),
-                            builder: (BuildContext context,
-                                AsyncSnapshot snapshot2) {
-                              if (snapshot2.connectionState ==
-                                  ConnectionState.done)
-                                return CarparkCard(
+                        return FutureBuilder(
+                          future: checkFavourite(snapshot.data[0][index]),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot2) {
+                            if (snapshot2.connectionState ==
+                                ConnectionState.done)
+                              return Container(
+                                padding: EdgeInsets.fromLTRB(
+                                    screenGap, cardGap, screenGap, cardGap),
+                                child: CarparkCard(
                                   carpark: snapshot.data[0][index],
                                   lat: snapshot.data[1].latitude,
                                   lng: snapshot.data[1].longitude,
                                   isFavourite: snapshot2.data,
-                                );
-                              else
-                                return Container();
-                            },
-                          ),
+                                ),
+                              );
+                            else
+                              return SizedBox.shrink();
+                          },
                         );
                       }),
                 ],

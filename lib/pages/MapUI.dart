@@ -13,6 +13,7 @@ class MapUI extends StatefulWidget {
 }
 
 class _MapUIState extends State<MapUI> {
+  late LatLng userPosition;
   List<Marker> markers = [];
 
   Location _location = Location();
