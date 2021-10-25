@@ -18,7 +18,7 @@ void main() => runApp(MaterialApp(
 test() async {
   await Firebase.initializeApp();
   DatabaseCtrl test = DatabaseCtrl();
-  var result = await test.getNearbyCarparks(1.307778, 103.930278, 1);
+  var result = await test.getCarparkByAddress("Blk 215 Ang Mo Kio Street 22");
   print("back in test");
   print(result);
 }
@@ -72,6 +72,15 @@ class DatabaseCtrl {
   Future<Carpark> getCarpark(String carparkNo) async =>
       await _getDocument(carparkInfoCollection, carparkNo) as Carpark;
 
+  Future<Carpark> getCarparkByAddress(String address) async {
+    List<QueryDocumentSnapshot> docSnapshots = await carparkInfoCollection
+        .where("address", isEqualTo: address)
+        .get()
+        .then((snapshot) => snapshot.docs);
+    return docSnapshots[0].data() as Carpark;
+  }
+
+
   Future<List<Carpark>> getAllCarparks() async {
     List<QueryDocumentSnapshot> carparkDocs =
         await carparkInfoCollection.get().then((snapshot) => snapshot.docs);
@@ -79,6 +88,14 @@ class DatabaseCtrl {
     for (int i = 0; i < carparkDocs.length; i++)
       carparks.add(carparkDocs[i].data() as Carpark);
     return carparks;
+  }
+
+  Future<List<String>> getAllCarparkAddresses() async{
+    CollectionReference collRef = FirebaseFirestore.instance.collection(carparkConst.collectionName);
+    List<QueryDocumentSnapshot> docSnapshots = await collRef.get().then((snapshot) => snapshot.docs);
+    List<String> addresses = [];
+    for (QueryDocumentSnapshot snapshot in docSnapshots) addresses.add((snapshot.data() as Map)[carparkConst.address]);
+    return addresses;
   }
 
   Future<List<Carpark>> getNearbyCarparks(
