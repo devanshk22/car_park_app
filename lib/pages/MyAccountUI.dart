@@ -31,7 +31,7 @@ class _MyAccountUIState extends State<MyAccountUI> {
         backgroundColor: Colors.grey[850],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
