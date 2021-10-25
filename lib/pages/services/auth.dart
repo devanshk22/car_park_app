@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:car_park_app/models/userAccount.dart';
+import 'package:car_park_app/control/DatabaseCtrl.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -36,13 +37,16 @@ class AuthService {
   // Register with Email and Password
   Future registerAccount(
       String email, String password, String phone, String fullName) async {
+    final DatabaseCtrl db = new DatabaseCtrl();
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       User? user = result.user;
-      return _userFromFirebaseUser(user!);
+      UserAccount? custom_user_obj = _userFromFirebaseUser(user!);
+      db.addUser(custom_user_obj!);
+      return custom_user_obj;
     } catch (error) {
       print(error.toString());
       return null;

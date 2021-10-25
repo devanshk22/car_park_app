@@ -2,7 +2,7 @@ import 'package:car_park_app/entities/all.dart';
 import 'package:car_park_app/pages/services/auth.dart';
 import 'package:car_park_app/pages/wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:car_park_app/pages/BookingUI.dart';
+import 'package:car_park_app/pages/InfoUI.dart';
 import 'package:car_park_app/pages/FavouritesUI.dart';
 import 'package:car_park_app/pages/ForgotPasswordUI.dart';
 import 'package:car_park_app/pages/HistoryUI.dart';
@@ -24,8 +24,8 @@ class _myBottomNavigationBarState extends State<myBottomNavigationBar> {
   int _selectedIndex = 0;
   final List<Widget> children = [
     HomeUI(),
-    BookingUI(),
-    HistoryUI(),
+    MapUI(),
+    SearchResultUI(),
     FavouritesUI(),
     MyAccountUI(),
   ];
@@ -52,12 +52,12 @@ class _myBottomNavigationBarState extends State<myBottomNavigationBar> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car_rounded),
-            label: 'Booking',
+            icon: Icon(Icons.map),
+            label: 'Map',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_outline_outlined),
