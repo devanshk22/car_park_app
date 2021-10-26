@@ -29,13 +29,13 @@ test () async {
 
 class CarparkCtrl{
 
-  late DatabaseCtrl databaseCtrl;
+  late DatabaseCtrl _databaseCtrl;
 
   CarparkCtrl(){
-    databaseCtrl = DatabaseCtrl();
+    _databaseCtrl = DatabaseCtrl();
   }
 
-  _getAvailableCarparkInfo([DateTime? dateTime]) async{
+  Future<Map<String, int>> _getAvailableCarparkInfo([DateTime? dateTime]) async{
     String query = "https://api.data.gov.sg/v1/transport/carpark-availability";
     if (dateTime != null) query += "?date_time=${DateFormat("yyyy-MM-ddTHH%3Amm%3Ass").format(dateTime)}";
     http.Response response = await http.get(Uri.parse(query));
@@ -53,7 +53,7 @@ class CarparkCtrl{
 
   Future<List<Carpark>> getNearbyAvailableCarparks({double? latitude, double? longitude, double? radius, DateTime? dateTime}) async{
     // Get nearby carparks
-    List<Carpark> nearbyCarparks = await databaseCtrl.getNearbyCarparks(latitude, longitude, radius);
+    List<Carpark> nearbyCarparks = await _databaseCtrl.getNearbyCarparks(latitude, longitude, radius);
 
     // Get available carpark info
     Map<String, int> availableCarparkInfo = await _getAvailableCarparkInfo(dateTime);

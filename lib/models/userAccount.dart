@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../entities/booking.dart';
 import '../entities/carpark.dart';
 import '../constants/databaseConsts.dart';
 import 'package:car_park_app/control/DatabaseCtrl.dart';
@@ -10,7 +9,6 @@ class UserAccount {
   late String fullName = "";
   late String email = "";
   late String phone = "";
-  late List<Booking> bookings = [];
   late List<Carpark> favourites = [];
   DatabaseCtrl databaseCtrl = new DatabaseCtrl();
 
@@ -26,7 +24,6 @@ class UserAccount {
     email = json[userConst.email] as String;
     fullName = json[userConst.fullName] as String;
     phone = json[userConst.phone] as String;
-    bookings = json[userConst.bookings] as List<Booking>;
     favourites = json[userConst.favourites] as List<Carpark>;
   }
 
@@ -67,14 +64,9 @@ class UserAccount {
         for (int i = 0; i < favourites.length; i++) favourites[i].toString()
       ].join("\n");
 
-  String bookingsToString() => [
-        "BOOKINGS",
-        "--------",
-        for (int i = 0; i < bookings.length; i++) bookings[i].toString()
-      ].join("\n");
 
   String toString() =>
-      [userInfoToString(), favouritesToString(), bookingsToString()].join("\n");
+      [userInfoToString(), favouritesToString()].join("\n");
 
   String get id => uid;
 
@@ -124,14 +116,4 @@ class UserAccount {
     }
   }
 
-  List<Booking> getHistory() {
-    List<Booking> all_bookings = this.bookings;
-    List<Booking> history = [];
-    for (var item in all_bookings) {
-      if (item.status == BookingStatus.PAST) {
-        history.add(item);
-      }
-    }
-    return history;
-  }
 }

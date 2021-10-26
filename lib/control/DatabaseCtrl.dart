@@ -26,23 +26,23 @@ test() async {
 class DatabaseCtrl {
   static const String _carparkInfoID = "139a3035-e624-4f56-b63f-89ae28d4ae4c";
 
-  late CollectionReference carparkInfoCollection;
-  late CollectionReference userCollection;
+  late CollectionReference _carparkInfoCollection;
+  late CollectionReference _userCollection;
 
-  late Geoflutterfire geo;
+  late Geoflutterfire _geo;
 
   DatabaseCtrl() {
-    carparkInfoCollection = FirebaseFirestore.instance
+    _carparkInfoCollection = FirebaseFirestore.instance
         .collection(carparkConst.collectionName)
         .withConverter(
             fromFirestore: (snapshot, _) =>
                 Carpark.fromJson(snapshot.id, snapshot.data() as Map),
             toFirestore: (object, _) =>
                 (object as CarparkDataHandler).toJson());
-    userCollection =
+    _userCollection =
         FirebaseFirestore.instance.collection(userConst.collectionName);
 
-    geo = Geoflutterfire();
+    _geo = Geoflutterfire();
   }
 
   Future<Map> _ckanQuery(
@@ -70,10 +70,10 @@ class DatabaseCtrl {
       await collection.doc(id).get().then((snapshot) => snapshot.data());
 
   Future<Carpark> getCarpark(String carparkNo) async =>
-      await _getDocument(carparkInfoCollection, carparkNo) as Carpark;
+      await _getDocument(_carparkInfoCollection, carparkNo) as Carpark;
 
   Future<Carpark> getCarparkByAddress(String address) async {
-    List<QueryDocumentSnapshot> docSnapshots = await carparkInfoCollection
+    List<QueryDocumentSnapshot> docSnapshots = await _carparkInfoCollection
         .where("address", isEqualTo: address)
         .get()
         .then((snapshot) => snapshot.docs);
@@ -83,7 +83,7 @@ class DatabaseCtrl {
 
   Future<List<Carpark>> getAllCarparks() async {
     List<QueryDocumentSnapshot> carparkDocs =
-        await carparkInfoCollection.get().then((snapshot) => snapshot.docs);
+        await _carparkInfoCollection.get().then((snapshot) => snapshot.docs);
     List<Carpark> carparks = [];
     for (int i = 0; i < carparkDocs.length; i++)
       carparks.add(carparkDocs[i].data() as Carpark);
@@ -105,10 +105,10 @@ class DatabaseCtrl {
       longitude = 103.930278;
     }
     if (radius == null) radius = 1.0;
-    GeoFirePoint center = geo.point(latitude: latitude, longitude: longitude);
+    GeoFirePoint center = _geo.point(latitude: latitude, longitude: longitude);
     CollectionReference collection =
         FirebaseFirestore.instance.collection(carparkConst.collectionName);
-    Stream stream = geo
+    Stream stream = _geo
         .collection(collectionRef: collection)
         .within(center: center, radius: radius, field: "location");
     await for (List<DocumentSnapshot> snapshots in stream) {
@@ -139,14 +139,14 @@ class DatabaseCtrl {
       // Format data
       Map latLong = await _gridToLatLong(
           dataRow[carparkInfoConst.xCoord], dataRow[carparkInfoConst.yCoord]);
-      location = geo.point(
+      location = _geo.point(
           latitude: latLong["latitude"], longitude: latLong["longitude"]);
       dataRow[carparkConst.location] = location;
       CarparkDataHandler carpark = CarparkDataHandler.fromJson(dataRow);
 
       // if document exists in collection, update document
       // else, add document
-      await carparkInfoCollection.doc(carpark.id).set(carpark);
+      await _carparkInfoCollection.doc(carpark.id).set(carpark);
 
       print("updated carpark ${(i + 1).toString()}");
     }
@@ -156,9 +156,9 @@ class DatabaseCtrl {
 
   Future<UserAccount> getUser(String uid) async {
     // Get user information
-    Map userMapData = await _getDocument(userCollection, uid) as Map;
+    Map userMapData = await _getDocument(_userCollection, uid) as Map;
 
-    DocumentReference userDocRef = userCollection.doc(uid);
+    DocumentReference userDocRef = _userCollection.doc(uid);
 
     // Get bookings
     QuerySnapshot querySnapshot = await userDocRef
@@ -166,15 +166,6 @@ class DatabaseCtrl {
         .orderBy(bookingConst.startTime, descending: true)
         .get();
     List<QueryDocumentSnapshot> documentSnapshots = querySnapshot.docs;
-
-    List<Booking> bookingHistory = [];
-    for (int i = 0; i < documentSnapshots.length; i++) {
-      QueryDocumentSnapshot documentSnapshot = documentSnapshots[i];
-      Booking booking = await _getBooking(
-          documentSnapshot.id, documentSnapshot.data() as Map);
-      bookingHistory.add(booking);
-    }
-    userMapData[userConst.bookings] = bookingHistory;
 
     // Get favourites
     List favouriteRefs = userMapData[userConst.favourites];
@@ -189,10 +180,10 @@ class DatabaseCtrl {
   }
 
   Future<void> addUser(UserAccount user) async =>
-      await userCollection.doc(user.id).set(user.toJson());
+      await _userCollection.doc(user.id).set(user.toJson());
 
   Future<void> _updateUserFields(String userEmail, Map data) async =>
-      userCollection.doc(userEmail).update(data as Map<String, Object?>);
+      _userCollection.doc(userEmail).update(data as Map<String, Object?>);
 
   Future<void> updateUserInfo(UserAccount user) async =>
       _updateUserFields(user.id, user.userInfoToJson());
@@ -201,58 +192,15 @@ class DatabaseCtrl {
       _updateUserFields(user.id, user.favouritesToJson());
 
   Future<void> removeFavourites(UserAccount user) async {
-    await userCollection.doc(user.id).set(
+    await _userCollection.doc(user.id).set(
         {userConst.favourites: FieldValue.delete()}, SetOptions(merge: true));
-    await userCollection.doc(user.id).set(user.toJson());
+    await _userCollection.doc(user.id).set(user.toJson());
   }
 
   // this function updates everything except bookings
   Future<void> updateUser(UserAccount user) async =>
-      await userCollection.doc(user.id).update(user.toJson());
+      await _userCollection.doc(user.id).update(user.toJson());
 
   Future<void> removeUser(String email) async =>
-      await userCollection.doc(email).delete();
-
-  Future<Booking> _getBooking(String id, Map json) async {
-    Carpark carpark = await getCarpark(json[bookingConst.carparkRef].id);
-    json[bookingConst.carparkObj] = carpark;
-    return Booking.fromJson(id, json);
-  }
-
-  Future<void> addBooking(String userEmail, Booking booking) async =>
-      await userCollection
-          .doc(userEmail)
-          .collection(bookingConst.collectionName)
-          .add(booking.toJson());
-
-  Future<void> addAllBooking(String userEmail, List<Booking> bookings) async {
-    for (int i = 0; i < bookings.length; i++)
-      addBooking(userEmail, bookings[i]);
-  }
-
-  Future<void> updateBooking(String userEmail, Booking booking) async =>
-      await userCollection
-          .doc(userEmail)
-          .collection(bookingConst.collectionName)
-          .doc(booking.id)
-          .update(booking.toJson());
-
-  Future<void> updateAllBooking(
-      String userEmail, List<Booking> bookings) async {
-    for (int i = 0; i < bookings.length; i++)
-      updateBooking(userEmail, bookings[i]);
-  }
-
-  Future<void> removeBooking(String userEmail, String bookingID) async =>
-      await userCollection
-          .doc(userEmail)
-          .collection(bookingConst.collectionName)
-          .doc(bookingID)
-          .delete();
-
-  Future<void> removeAllBooking(
-      String userEmail, List<String> bookingIDs) async {
-    for (int i = 0; i < bookingIDs.length; i++)
-      removeBooking(userEmail, bookingIDs[i]);
-  }
+      await _userCollection.doc(email).delete();
 }

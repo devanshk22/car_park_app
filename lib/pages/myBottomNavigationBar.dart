@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:car_park_app/pages/InfoUI.dart';
 import 'package:car_park_app/pages/FavouritesUI.dart';
 import 'package:car_park_app/pages/ForgotPasswordUI.dart';
-import 'package:car_park_app/pages/HistoryUI.dart';
 import 'package:car_park_app/pages/HomeUI.dart';
 import 'package:car_park_app/pages/authenticate/LoginUI.dart';
 import 'package:car_park_app/pages/MapUI.dart';
