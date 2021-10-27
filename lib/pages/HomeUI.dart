@@ -46,38 +46,38 @@ class _HomeUIState extends State<HomeUI> {
               physics: ScrollPhysics(),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(
-                        screenGap, 2 * cardGap, screenGap, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 10,
-                          child: HomeNavCard(
-                              icon: Icon(
-                                Icons.map,
-                                color: Colors.orange[700],
-                              ),
-                              text: 'Open Map',
-                              page: MapUI()),
-                        ),
-                        Spacer(
-                          flex: 1,
-                        ),
-                        Expanded(
-                          flex: 10,
-                          child: HomeNavCard(
-                              icon: Icon(
-                                Icons.favorite_border,
-                                color: Colors.orange[700],
-                              ),
-                              text: 'My Favourites',
-                              page: FavouritesUI()),
-                        )
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   padding: EdgeInsets.fromLTRB(
+                  //       screenGap, 2 * cardGap, screenGap, 0),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: <Widget>[
+                  //       Expanded(
+                  //         flex: 10,
+                  //         child: HomeNavCard(
+                  //             icon: Icon(
+                  //               Icons.map,
+                  //               color: Colors.orange[700],
+                  //             ),
+                  //             text: 'Open Map',
+                  //             page: MapUI()),
+                  //       ),
+                  //       Spacer(
+                  //         flex: 1,
+                  //       ),
+                  //       Expanded(
+                  //         flex: 10,
+                  //         child: HomeNavCard(
+                  //             icon: Icon(
+                  //               Icons.favorite_border,
+                  //               color: Colors.orange[700],
+                  //             ),
+                  //             text: 'My Favourites',
+                  //             page: FavouritesUI()),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
                     alignment: Alignment.bottomLeft,
                     padding: EdgeInsets.fromLTRB(
