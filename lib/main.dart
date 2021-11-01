@@ -2,7 +2,6 @@ import 'package:car_park_app/entities/all.dart';
 import 'package:car_park_app/pages/services/auth.dart';
 import 'package:car_park_app/pages/wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:car_park_app/pages/ForgotPasswordUI.dart';
 import 'package:car_park_app/pages/authenticate/LoginUI.dart';
 import 'package:car_park_app/pages/MapUI.dart';
 import 'package:car_park_app/pages/RegistrationUI.dart';
