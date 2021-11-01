@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
-
 import '../constants/databaseConsts.dart';
+import 'dart:ui';
 
 
 GeoFirePoint geoDataToGeoFirePoint(Map geoData){
@@ -67,11 +67,12 @@ class Carpark{
     "Free Parking: $freeParking",
     "Night Parking: $nightParking",
     "Carpark Basement: $carparkBasement",
-    "Latitude: ${location!.latitude}",
-    "Longitude: ${location!.longitude}"
+    "Location: ${location!.latitude}, ${location!.longitude}",
+    "Available Lots: ${availableLots ?? "-"}"
   ].join("\n");
 
   String get id => carparkNo;
+
 }
 
 extension on String{

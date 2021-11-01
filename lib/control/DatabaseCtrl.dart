@@ -5,22 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:intl/intl.dart';
 
 import '../constants/databaseConsts.dart';
 import '../entities/all.dart';
 
 void main() => runApp(MaterialApp(
         home: TextButton(
-      child: Text("Test function"),
+      child: Text("Run test"),
       onPressed: () => test(),
     )));
 
 test() async {
   await Firebase.initializeApp();
   DatabaseCtrl test = DatabaseCtrl();
-  var result = await test.getCarparkByAddress("Blk 215 Ang Mo Kio Street 22");
-  print("back in test");
-  print(result);
+
+  var output = await test.getCarparkByAddress("Blk 215 Ang Mo Kio Street 22");
+  print(output);
 }
 
 class DatabaseCtrl {
@@ -73,11 +74,17 @@ class DatabaseCtrl {
       await _getDocument(_carparkInfoCollection, carparkNo) as Carpark;
 
   Future<Carpark> getCarparkByAddress(String address) async {
+    // Retireve carpark
     List<QueryDocumentSnapshot> docSnapshots = await _carparkInfoCollection
         .where("address", isEqualTo: address)
         .get()
         .then((snapshot) => snapshot.docs);
-    return docSnapshots[0].data() as Carpark;
+    Carpark carpark = docSnapshots[0].data() as Carpark;
+
+    // Retrieve available carpark info
+    Map<String, int> availableCarparkInfo = await getAvailableCarparkInfo();
+    carpark.availableLots = availableCarparkInfo.containsKey(carpark.carparkNo) ? availableCarparkInfo[carpark.carparkNo] : 0;
+    return carpark;
   }
 
 
@@ -121,6 +128,22 @@ class DatabaseCtrl {
       return carparks;
     }
     return [];
+  }
+
+  Future<Map<String, int>> getAvailableCarparkInfo([DateTime? dateTime]) async{
+    String query = "https://api.data.gov.sg/v1/transport/carpark-availability";
+    if (dateTime != null) query += "?date_time=${DateFormat("yyyy-MM-ddTHH%3Amm%3Ass").format(dateTime)}";
+    http.Response response = await http.get(Uri.parse(query));
+    List carparks = json.decode(response.body)["items"][0]["carpark_data"];
+    Map<String, int> carparkInfo = {};
+    String carparkNo;
+    int availableLots;
+    for (Map carpark in carparks){
+      carparkNo = carpark["carpark_number"];
+      availableLots = int.parse(carpark["carpark_info"][0]["lots_available"]);
+      carparkInfo[carparkNo] = availableLots;
+    }
+    return carparkInfo;
   }
 
   Future<void> updateCarparkInfo() async {
