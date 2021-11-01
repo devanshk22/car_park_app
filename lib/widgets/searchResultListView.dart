@@ -92,6 +92,15 @@ class _SearchResultsListViewState extends State<SearchResultsListView> {
               padding: EdgeInsets.only(top: 64.0),
               children: allCarParks
                   .map((e) => ListTile(
+                        enabled: true,
+                        onTap: () async {
+                          Carpark carpark = await db.getCarparkByAddress(e);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      InfoUI(carpark: carpark)));
+                        },
                         title: Text(
                           e,
                           style: TextStyle(color: Colors.white),
