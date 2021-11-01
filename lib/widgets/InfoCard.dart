@@ -24,7 +24,7 @@ class _InfoCardState extends State<InfoCard> {
   Widget build(BuildContext context) {
     return Container(
       width: getScreenWidth(context) - 2 * screenGap,
-      height: 0.70 * getScreenHeight(context),
+      height: getScreenHeight(context),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -32,7 +32,7 @@ class _InfoCardState extends State<InfoCard> {
             left: 0,
             child: Container(
               width: getScreenWidth(context) - 2 * screenGap,
-              height: 0.70 * getScreenHeight(context),
+              height: 0.7 * getScreenHeight(context),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15),
@@ -147,7 +147,7 @@ Car Park Basement: ${widget.carpark.carparkBasement}
               style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Roboto',
-                  fontSize: 16,
+                  fontSize: 14,
                   letterSpacing:
                       0 /*percentages not used in flutter. defaulting to zero*/,
                   fontWeight: FontWeight.normal,
@@ -156,48 +156,6 @@ Car Park Basement: ${widget.carpark.carparkBasement}
           ),
           Positioned(
             bottom: 30,
-            child: Container(
-              width: getScreenWidth(context) - 2 * screenGap,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: getScreenWidth(context) - 100,
-                    height: 60,
-                    child: TextButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => myBottomNavigationBar()),
-                        );
-                      },
-                      label: Text('Back to Home',
-                          style: TextStyle(
-                            color: Colors.white,
-                          )),
-                      icon: Icon(
-                        Icons.home,
-                        color: Colors.white,
-                      ),
-                      style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                        ),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.lightBlue),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 105,
             child: Container(
               width: getScreenWidth(context) - 2 * screenGap,
               child: Column(
