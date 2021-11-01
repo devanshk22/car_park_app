@@ -44,11 +44,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# Glenda's git ignore files
-lib/control/RunDatabaseCtrl.dart
-lib/control/LoginCtrl.dart
-lib/control/Test.dart
-lib/control/authentication.dart
-lib/control/widgets.dart
-lib/entity.dart
