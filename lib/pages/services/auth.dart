@@ -10,6 +10,7 @@ class AuthService {
     return user != null
         ? UserAccount(
             uid: user.uid,
+            email: user.email,
           )
         : null;
   }
@@ -45,7 +46,11 @@ class AuthService {
       );
       User? user = result.user;
       UserAccount? custom_user_obj = _userFromFirebaseUser(user!);
-      db.addUser(custom_user_obj!);
+      custom_user_obj!.setPhone(phone);
+      custom_user_obj.setFullName(fullName);
+      custom_user_obj.setPassword(password);
+      print(custom_user_obj.password);
+      db.addUser(custom_user_obj);
       return custom_user_obj;
     } catch (error) {
       print(error.toString());

@@ -11,6 +11,7 @@ import 'package:car_park_app/pages/authenticate/register.dart';
 
 import 'package:car_park_app/control/DatabaseCtrl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 class MyAccountUI extends StatefulWidget {
   const MyAccountUI({Key? key}) : super(key: key);
@@ -20,9 +21,15 @@ class MyAccountUI extends StatefulWidget {
 }
 
 class _MyAccountUIState extends State<MyAccountUI> {
+  final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserAccount?>(context);
+    final name = user!.fullName;
+    final email = user.email;
+    final phonenum = user.phone;
+    final password = user.password;
     return new Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: new AppBar(
@@ -53,8 +60,8 @@ class _MyAccountUIState extends State<MyAccountUI> {
               ),
               TextFormField(
                 decoration: textInputDecoration.copyWith(
-                  labelText: 'Full name',
-                  hintText: 'Full Name',
+                  labelText: name,
+                  hintText: name,
                   labelStyle: TextStyle(color: Colors.white, fontSize: 10.0),
                   suffixIcon: Icon(
                     Icons.border_color,
@@ -80,8 +87,8 @@ class _MyAccountUIState extends State<MyAccountUI> {
               ),
               TextFormField(
                 decoration: textInputDecoration.copyWith(
-                  hintText: 'Email',
-                  labelText: 'Email',
+                  hintText: email,
+                  labelText: email,
                   labelStyle: TextStyle(color: Colors.white, fontSize: 10.0),
                   suffixIcon: Icon(
                     Icons.border_color,
@@ -95,8 +102,8 @@ class _MyAccountUIState extends State<MyAccountUI> {
               ),
               TextFormField(
                 decoration: textInputDecoration.copyWith(
-                  hintText: 'Phone Number',
-                  labelText: 'Phone Number',
+                  hintText: phonenum,
+                  labelText: phonenum,
                   labelStyle: TextStyle(color: Colors.white, fontSize: 10.0),
                   suffixIcon: Icon(
                     Icons.border_color,
@@ -152,5 +159,7 @@ class _MyAccountUIState extends State<MyAccountUI> {
 
   void changePassword() {}
 
-  void logout() {}
+  void logout() async {
+    await _auth.signOut();
+  }
 }

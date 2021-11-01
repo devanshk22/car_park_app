@@ -9,6 +9,7 @@ class UserAccount {
   late String fullName = "";
   late String email = "";
   late String phone = "";
+  late String password = "";
   late List<Carpark> favourites = [];
   DatabaseCtrl databaseCtrl = new DatabaseCtrl();
 
@@ -64,9 +65,7 @@ class UserAccount {
         for (int i = 0; i < favourites.length; i++) favourites[i].toString()
       ].join("\n");
 
-
-  String toString() =>
-      [userInfoToString(), favouritesToString()].join("\n");
+  String toString() => [userInfoToString(), favouritesToString()].join("\n");
 
   String get id => uid;
 
@@ -76,6 +75,10 @@ class UserAccount {
 
   void setEmail(String email) {
     this.email = email;
+  }
+
+  void setPassword(String password) {
+    this.password = password;
   }
 
   String getFullName() {
@@ -115,5 +118,4 @@ class UserAccount {
       print(e);
     }
   }
-
 }
