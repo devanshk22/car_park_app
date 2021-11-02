@@ -1,8 +1,4 @@
-import 'package:car_park_app/utilities/favouritesMgr.dart';
-import 'package:car_park_app/utilities/locationMgr.dart';
 import 'package:flutter/material.dart';
-import 'package:car_park_app/constants/app_constants.dart';
-import 'package:car_park_app/widgets/CarparkCard.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:car_park_app/widgets/searchResultListView.dart';
 
