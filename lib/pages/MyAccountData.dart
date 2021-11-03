@@ -1,11 +1,9 @@
 import 'package:car_park_app/control/DatabaseCtrl.dart';
 import 'package:car_park_app/entities/all.dart';
 import 'package:car_park_app/pages/services/auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/shared/constants.dart';
-import 'package:provider/provider.dart';
 import 'package:car_park_app/models/userAccount.dart';
 
 class MyAccountData extends StatefulWidget {

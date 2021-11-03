@@ -1,17 +1,7 @@
 import 'package:car_park_app/pages/MyAccountData.dart';
 import 'package:flutter/material.dart';
-import 'package:car_park_app/constants/databaseConsts.dart';
-import 'package:car_park_app/pages/services/auth.dart';
-import 'package:car_park_app/shared/constants.dart';
-import 'package:car_park_app/pages/InfoUI.dart';
-import 'package:car_park_app/constants/app_constants.dart';
-import 'package:car_park_app/pages/RegistrationUI.dart';
-import 'package:car_park_app/models/userAccount.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:car_park_app/pages/authenticate/register.dart';
-
 import 'package:car_park_app/control/DatabaseCtrl.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 class MyAccountUI extends StatefulWidget {

@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:intl/intl.dart';
-
 import '../constants/databaseConsts.dart';
 import '../entities/all.dart';
 

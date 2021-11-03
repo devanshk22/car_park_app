@@ -1,17 +1,9 @@
-import 'package:car_park_app/entities/all.dart';
-import 'package:car_park_app/pages/services/auth.dart';
-import 'package:car_park_app/pages/wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:car_park_app/pages/InfoUI.dart';
 import 'package:car_park_app/pages/FavouritesUI.dart';
 import 'package:car_park_app/pages/HomeUI.dart';
-import 'package:car_park_app/pages/authenticate/LoginUI.dart';
 import 'package:car_park_app/pages/MapUI.dart';
 import 'package:car_park_app/pages/MyAccountUI.dart';
-import 'package:car_park_app/pages/RegistrationUI.dart';
 import 'package:car_park_app/pages/SearchResultUI.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
 
 class myBottomNavigationBar extends StatefulWidget {
   @override

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../entities/carpark.dart';
+import '../entities/all.dart';
 import '../constants/databaseConsts.dart';
 import 'package:car_park_app/control/DatabaseCtrl.dart';
 
