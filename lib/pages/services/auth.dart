@@ -48,9 +48,7 @@ class AuthService {
       UserAccount? custom_user_obj = _userFromFirebaseUser(user!);
       custom_user_obj!.setPhone(phone);
       custom_user_obj.setFullName(fullName);
-      custom_user_obj.setPassword(password);
-      print(custom_user_obj.password);
-      db.addUser(custom_user_obj);
+      await db.addUser(custom_user_obj);
       return custom_user_obj;
     } catch (error) {
       print(error.toString());

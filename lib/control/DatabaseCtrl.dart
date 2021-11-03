@@ -28,7 +28,8 @@ class DatabaseCtrl {
   static const String _carparkInfoID = "139a3035-e624-4f56-b63f-89ae28d4ae4c";
 
   late CollectionReference _carparkInfoCollection;
-  late CollectionReference _userCollection;
+  final CollectionReference _userCollection =
+      FirebaseFirestore.instance.collection(userConst.collectionName);
 
   late Geoflutterfire _geo;
 
@@ -40,10 +41,13 @@ class DatabaseCtrl {
                 Carpark.fromJson(snapshot.id, snapshot.data() as Map),
             toFirestore: (object, _) =>
                 (object as CarparkDataHandler).toJson());
-    _userCollection =
-        FirebaseFirestore.instance.collection(userConst.collectionName);
 
     _geo = Geoflutterfire();
+  }
+
+  //Get user account data
+  Stream<QuerySnapshot> get userData {
+    return _userCollection.snapshots();
   }
 
   Future<Map> _ckanQuery(
@@ -83,10 +87,11 @@ class DatabaseCtrl {
 
     // Retrieve available carpark info
     Map<String, int> availableCarparkInfo = await getAvailableCarparkInfo();
-    carpark.availableLots = availableCarparkInfo.containsKey(carpark.carparkNo) ? availableCarparkInfo[carpark.carparkNo] : 0;
+    carpark.availableLots = availableCarparkInfo.containsKey(carpark.carparkNo)
+        ? availableCarparkInfo[carpark.carparkNo]
+        : 0;
     return carpark;
   }
-
 
   Future<List<Carpark>> getAllCarparks() async {
     List<QueryDocumentSnapshot> carparkDocs =
@@ -97,11 +102,14 @@ class DatabaseCtrl {
     return carparks;
   }
 
-  Future<List<String>> getAllCarparkAddresses() async{
-    CollectionReference collRef = FirebaseFirestore.instance.collection(carparkConst.collectionName);
-    List<QueryDocumentSnapshot> docSnapshots = await collRef.get().then((snapshot) => snapshot.docs);
+  Future<List<String>> getAllCarparkAddresses() async {
+    CollectionReference collRef =
+        FirebaseFirestore.instance.collection(carparkConst.collectionName);
+    List<QueryDocumentSnapshot> docSnapshots =
+        await collRef.get().then((snapshot) => snapshot.docs);
     List<String> addresses = [];
-    for (QueryDocumentSnapshot snapshot in docSnapshots) addresses.add((snapshot.data() as Map)[carparkConst.address]);
+    for (QueryDocumentSnapshot snapshot in docSnapshots)
+      addresses.add((snapshot.data() as Map)[carparkConst.address]);
     return addresses;
   }
 
@@ -130,15 +138,17 @@ class DatabaseCtrl {
     return [];
   }
 
-  Future<Map<String, int>> getAvailableCarparkInfo([DateTime? dateTime]) async{
+  Future<Map<String, int>> getAvailableCarparkInfo([DateTime? dateTime]) async {
     String query = "https://api.data.gov.sg/v1/transport/carpark-availability";
-    if (dateTime != null) query += "?date_time=${DateFormat("yyyy-MM-ddTHH%3Amm%3Ass").format(dateTime)}";
+    if (dateTime != null)
+      query +=
+          "?date_time=${DateFormat("yyyy-MM-ddTHH%3Amm%3Ass").format(dateTime)}";
     http.Response response = await http.get(Uri.parse(query));
     List carparks = json.decode(response.body)["items"][0]["carpark_data"];
     Map<String, int> carparkInfo = {};
     String carparkNo;
     int availableLots;
-    for (Map carpark in carparks){
+    for (Map carpark in carparks) {
       carparkNo = carpark["carpark_number"];
       availableLots = int.parse(carpark["carpark_info"][0]["lots_available"]);
       carparkInfo[carparkNo] = availableLots;
@@ -202,8 +212,10 @@ class DatabaseCtrl {
     return UserAccount.fromJson(uid, userMapData);
   }
 
-  Future<void> addUser(UserAccount user) async =>
-      await _userCollection.doc(user.id).set(user.toJson());
+  Future<void> addUser(UserAccount user) async {
+    print(user.toJson());
+    await _userCollection.doc(user.id).set(user.toJson());
+  }
 
   Future<void> _updateUserFields(String userEmail, Map data) async =>
       _userCollection.doc(userEmail).update(data as Map<String, Object?>);

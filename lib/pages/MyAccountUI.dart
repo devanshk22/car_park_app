@@ -1,3 +1,4 @@
+import 'package:car_park_app/pages/MyAccountData.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/databaseConsts.dart';
 import 'package:car_park_app/pages/services/auth.dart';
@@ -21,136 +22,23 @@ class MyAccountUI extends StatefulWidget {
 }
 
 class _MyAccountUIState extends State<MyAccountUI> {
-  final AuthService _auth = AuthService();
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserAccount?>(context);
-    final name = user!.fullName;
-    final email = user.email;
-    final phonenum = user.phone;
-    final password = user.password;
-    return new Scaffold(
-      backgroundColor: Colors.grey[900],
-      appBar: new AppBar(
-        title: new Text('My Account'),
-        centerTitle: true,
-        backgroundColor: Colors.grey[850],
-      ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(children: <Widget>[
-              SizedBox(
-                height: 20.0,
-              ),
-              new Text(
-                "Profile",
-                textAlign: TextAlign.center,
-                style: new TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(
-                  labelText: name,
-                  hintText: name,
-                  labelStyle: TextStyle(color: Colors.white, fontSize: 10.0),
-                  suffixIcon: Icon(
-                    Icons.border_color,
-                    color: Colors.white,
-                    size: 20.0,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              new Text(
-                "Details",
-                textAlign: TextAlign.center,
-                style: new TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(
-                  hintText: email,
-                  labelText: email,
-                  labelStyle: TextStyle(color: Colors.white, fontSize: 10.0),
-                  suffixIcon: Icon(
-                    Icons.border_color,
-                    color: Colors.white,
-                    size: 20.0,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(
-                  hintText: phonenum,
-                  labelText: phonenum,
-                  labelStyle: TextStyle(color: Colors.white, fontSize: 10.0),
-                  suffixIcon: Icon(
-                    Icons.border_color,
-                    color: Colors.white,
-                    size: 20.0,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              new Text(
-                "Settings",
-                textAlign: TextAlign.center,
-                style: new TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              ElevatedButton(
-                style: TextButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 10),
-                  backgroundColor: Colors.grey[850],
-                ),
-                onPressed: changePassword,
-                child: const Text('Change Password',
-                    style: TextStyle(color: Colors.white)),
-              ),
-              ElevatedButton(
-                style: TextButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 10),
-                  backgroundColor: Colors.grey[850],
-                ),
-                onPressed: logout,
-                child:
-                    const Text('Logout', style: TextStyle(color: Colors.red)),
-              ),
-            ]),
-          ),
+    // final user = Provider.of<UserAccount?>(context);
+    // final name = user!.fullName;
+    // final email = user.email;
+    // final phonenum = user.phone;
+    return StreamProvider<QuerySnapshot?>.value(
+      initialData: null,
+      value: DatabaseCtrl().userData,
+      child: Scaffold(
+        backgroundColor: Colors.grey[900],
+        appBar: new AppBar(
+          title: new Text('My Account'),
+          centerTitle: true,
+          backgroundColor: Colors.grey[850],
         ),
+        body: MyAccountData(),
       ),
     );
   }
@@ -158,8 +46,4 @@ class _MyAccountUIState extends State<MyAccountUI> {
   void iconButtonPressed() {}
 
   void changePassword() {}
-
-  void logout() async {
-    await _auth.signOut();
-  }
 }
