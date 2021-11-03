@@ -1,4 +1,5 @@
 import 'package:car_park_app/entities/all.dart';
+import 'package:car_park_app/pages/change_password.dart';
 import 'package:car_park_app/pages/services/auth.dart';
 import 'package:car_park_app/pages/wrapper.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
           '/registration': (context) => RegistrationUI(),
           '/searchresult': (context) => SearchResultUI(),
           '/wrapper': (context) => Wrapper(),
+          '/changepassword': (context) => ChangePassword(),
         },
       ),
       catchError: (User, UserAccount) => null,

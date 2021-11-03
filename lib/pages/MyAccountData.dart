@@ -1,5 +1,6 @@
 import 'package:car_park_app/control/DatabaseCtrl.dart';
 import 'package:car_park_app/entities/all.dart';
+import 'package:car_park_app/pages/change_password.dart';
 import 'package:car_park_app/pages/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -283,7 +284,12 @@ class _MyAccountDataState extends State<MyAccountData> {
                       textStyle: const TextStyle(fontSize: 16),
                       backgroundColor: Colors.grey[850],
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePassword()));
+                    },
                     child: const Text('Change Password',
                         style: TextStyle(color: Colors.white)),
                   ),
