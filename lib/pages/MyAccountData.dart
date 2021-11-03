@@ -18,6 +18,15 @@ class MyAccountData extends StatefulWidget {
 class _MyAccountDataState extends State<MyAccountData> {
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  bool nameEnabled = false;
+  bool emailEnabled = false;
+  bool phoneEnabled = false;
+  bool nameSaveEnabled = false;
+  bool emailSaveEnabled = false;
+  bool phoneSaveEnabled = false;
+  late String nameText;
+  late String emailText;
+  late String phoneText;
   @override
   Widget build(BuildContext context) {
     final User? user = auth.currentUser;
@@ -56,65 +65,203 @@ class _MyAccountDataState extends State<MyAccountData> {
                   SizedBox(
                     height: 20.0,
                   ),
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(
-                      labelText: current_user!.fullName,
-                      hintText: current_user.fullName,
-                      labelStyle:
-                          TextStyle(color: Colors.white, fontSize: 16.0),
-                      suffixIcon: Icon(
-                        Icons.border_color,
-                        color: Colors.white,
-                        size: 20.0,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Name",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  new Text(
-                    "Details",
-                    textAlign: TextAlign.center,
-                    style: new TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(
-                      hintText: current_user.email,
-                      labelText: current_user.email,
-                      labelStyle:
-                          TextStyle(color: Colors.white, fontSize: 16.0),
-                      suffixIcon: Icon(
-                        Icons.border_color,
-                        color: Colors.white,
-                        size: 20.0,
+                      SizedBox(
+                        width: 10.0,
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(
-                      hintText: current_user.phone,
-                      labelText: current_user.phone,
-                      labelStyle:
-                          TextStyle(color: Colors.white, fontSize: 16.0),
-                      suffixIcon: Icon(
-                        Icons.border_color,
-                        color: Colors.white,
-                        size: 20.0,
+                      Expanded(
+                        child: TextFormField(
+                          onChanged: (text) {
+                            nameText = text;
+                          },
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                          decoration: textInputDecoration.copyWith(
+                            enabled: nameEnabled,
+                            hintText: current_user!.fullName,
+                            hintStyle:
+                                TextStyle(color: Colors.grey, fontSize: 16.0),
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.pink),
+                        ),
+                        child: Icon(Icons.border_color),
+                        onPressed: () {
+                          setState(() {
+                            nameEnabled = !nameEnabled;
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.pink),
+                        ),
+                        child: Icon(Icons.check),
+                        onPressed: () {
+                          setState(() {
+                            if (nameEnabled) {
+                              current_user.setFullName(nameText);
+                              DatabaseCtrl().updateUserInfo(current_user);
+                              nameEnabled = !nameEnabled;
+                            }
+                          });
+                        },
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 20.0,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Email",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          onChanged: (text) {
+                            emailText = text;
+                          },
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                          decoration: textInputDecoration.copyWith(
+                            enabled: emailEnabled,
+                            hintText: current_user.email,
+                            hintStyle:
+                                TextStyle(color: Colors.grey, fontSize: 16.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.pink),
+                        ),
+                        child: Icon(Icons.border_color),
+                        onPressed: () {
+                          setState(() {
+                            emailEnabled = !emailEnabled;
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.pink),
+                        ),
+                        child: Icon(Icons.check),
+                        onPressed: () {
+                          setState(() {
+                            if (emailEnabled) {
+                              current_user.setEmail(emailText);
+                              DatabaseCtrl().updateUserInfo(current_user);
+                              emailEnabled = !emailEnabled;
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Phone",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          onChanged: (text) {
+                            phoneText = text;
+                          },
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                          decoration: textInputDecoration.copyWith(
+                            enabled: phoneEnabled,
+                            hintText: current_user.phone,
+                            hintStyle:
+                                TextStyle(color: Colors.grey, fontSize: 16.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.pink),
+                        ),
+                        child: Icon(Icons.border_color),
+                        onPressed: () {
+                          setState(() {
+                            phoneEnabled = !phoneEnabled;
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.pink),
+                        ),
+                        child: Icon(Icons.check),
+                        onPressed: () {
+                          setState(() {
+                            if (phoneEnabled) {
+                              current_user.setPhone(phoneText);
+                              DatabaseCtrl().updateUserInfo(current_user);
+                              phoneEnabled = !phoneEnabled;
+                            }
+                          });
+                        },
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 20.0,
@@ -133,7 +280,7 @@ class _MyAccountDataState extends State<MyAccountData> {
                   ),
                   ElevatedButton(
                     style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 10),
+                      textStyle: const TextStyle(fontSize: 16),
                       backgroundColor: Colors.grey[850],
                     ),
                     onPressed: () {},
@@ -142,7 +289,7 @@ class _MyAccountDataState extends State<MyAccountData> {
                   ),
                   ElevatedButton(
                     style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 10),
+                      textStyle: const TextStyle(fontSize: 16),
                       backgroundColor: Colors.grey[850],
                     ),
                     onPressed: () async {
