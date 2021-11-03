@@ -47,8 +47,8 @@ class _LoginUIState extends State<LoginUI> {
               ),
               TextFormField(
                 decoration: textInputDecoration.copyWith(
-                  hintText: 'Email ID',
-                  labelText: 'Email ID',
+                  hintText: 'Email',
+                  labelText: 'Email',
                   labelStyle: TextStyle(color: Colors.pink, fontSize: 16.0),
                   prefixIcon: Icon(
                     Icons.email,
@@ -56,7 +56,7 @@ class _LoginUIState extends State<LoginUI> {
                   ),
                 ),
                 validator: (val) =>
-                    val!.isEmpty ? "Please enter an Email ID" : null,
+                    val!.isEmpty ? "Please enter an Email" : null,
                 onChanged: (value) {
                   setState(() => email = value);
                 },
