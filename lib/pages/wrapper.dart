@@ -1,5 +1,4 @@
 import 'package:car_park_app/entities/all.dart';
-import 'package:car_park_app/pages/HomeUI.dart';
 import 'package:car_park_app/pages/authenticate/authenticate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

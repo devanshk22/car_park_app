@@ -2,7 +2,6 @@ import 'package:car_park_app/control/DatabaseCtrl.dart';
 import 'package:car_park_app/entities/all.dart';
 import 'package:car_park_app/pages/InfoUI.dart';
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchResultsListView extends StatefulWidget {
   final String searchTerm;

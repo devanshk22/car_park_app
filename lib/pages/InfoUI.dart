@@ -1,9 +1,7 @@
-import 'package:car_park_app/entities/carpark.dart';
-import 'package:car_park_app/utilities/favouritesMgr.dart';
+import 'package:car_park_app/entities/all.dart';
 import 'package:car_park_app/utilities/locationMgr.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
-import 'package:car_park_app/pages/services/auth.dart';
 import 'package:car_park_app/widgets/InfoCard.dart';
 
 class InfoUI extends StatefulWidget {

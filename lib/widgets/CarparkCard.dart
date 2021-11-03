@@ -1,9 +1,6 @@
-import 'package:car_park_app/control/DatabaseCtrl.dart';
-import 'package:car_park_app/entities/carpark.dart';
-import 'package:car_park_app/models/userAccount.dart';
+import 'package:car_park_app/entities/all.dart';
 import 'package:car_park_app/pages/InfoUI.dart';
 import 'package:car_park_app/utilities/favouritesMgr.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 

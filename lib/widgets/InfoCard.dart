@@ -1,4 +1,4 @@
-import 'package:car_park_app/entities/carpark.dart';
+import 'package:car_park_app/entities/all.dart';
 import 'package:car_park_app/pages/MapUI.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
@@ -170,7 +170,7 @@ Car Park Basement: ${widget.carpark.carparkBasement}
                           MaterialPageRoute(builder: (context) => MapUI()),
                         );
                       },
-                      label: Text('View Car Parks on Map',
+                      label: Text('View Map',
                           style: TextStyle(
                             color: Colors.white,
                           )),
