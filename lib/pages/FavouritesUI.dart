@@ -3,6 +3,7 @@ import 'package:car_park_app/utilities/locationMgr.dart';
 import 'package:car_park_app/widgets/CarparkCard.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class FavouritesUI extends StatefulWidget {
   const FavouritesUI({Key? key}) : super(key: key);
@@ -24,7 +25,78 @@ class _FavouritesUIState extends State<FavouritesUI> {
       body: FutureBuilder(
         future: Future.wait([getNearbyCarpark(), getPosition()]),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done)
+          if (snapshot.hasError) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Spacer(
+                      flex: 2,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        'Error: ${snapshot.error}',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        'Please open app settings and allow location permission to use the app',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: const Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                        size: 180,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: SizedBox(
+                        width: getScreenWidth(context) - 100,
+                        height: 60,
+                        child: TextButton.icon(
+                          onPressed: () async {
+                            await openAppSettings();
+                            setState(() {});
+                          },
+                          label: Text('Open Settings',
+                              style: TextStyle(
+                                color: Colors.white,
+                              )),
+                          icon: Icon(
+                            Icons.location_pin,
+                            color: Colors.white,
+                          ),
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                            ),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.pink),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Spacer(
+                      flex: 2,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done)
             return SingleChildScrollView(
               physics: ScrollPhysics(),
               child: Column(
