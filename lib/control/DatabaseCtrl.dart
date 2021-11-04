@@ -1,27 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:intl/intl.dart';
 import '../constants/databaseConsts.dart';
 import '../entities/all.dart';
-
-void main() => runApp(MaterialApp(
-        home: TextButton(
-      child: Text("Run test"),
-      onPressed: () => test(),
-    )));
-
-test() async {
-  await Firebase.initializeApp();
-  DatabaseCtrl test = DatabaseCtrl();
-
-  var output = await test.getCarparkByAddress("Blk 215 Ang Mo Kio Street 22");
-  print(output);
-}
 
 class DatabaseCtrl {
   static const String _carparkInfoID = "139a3035-e624-4f56-b63f-89ae28d4ae4c";

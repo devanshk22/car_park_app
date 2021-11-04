@@ -1,24 +1,5 @@
 import 'package:car_park_app/control/DatabaseCtrl.dart';
 import 'package:car_park_app/entities/all.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
-void main() => runApp(MaterialApp(
-        home: TextButton(
-      child: Text("Test function"),
-      onPressed: () => test(),
-    )));
-
-test() async {
-  await Firebase.initializeApp();
-  CarparkCtrl test = CarparkCtrl();
-  var output = await test.getNearbyAvailableCarparks();
-  for (var e in output) {
-    print(e);
-    print(e.availableLots);
-  }
-}
 
 class CarparkCtrl {
   late DatabaseCtrl _databaseCtrl;
