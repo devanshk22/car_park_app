@@ -1,7 +1,7 @@
 import 'package:car_park_app/pages/FavouritesUI.dart';
 import 'package:car_park_app/utilities/favouritesMgr.dart';
 import 'package:car_park_app/utilities/locationMgr.dart';
-import 'package:car_park_app/widgets/HomeNavCard.dart';
+import 'package:car_park_app/widgets/NavCard.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 import 'package:car_park_app/pages/services/auth.dart';
@@ -9,14 +9,14 @@ import 'package:car_park_app/widgets/CarparkCard.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'MapUI.dart';
 
-class HomeUI extends StatefulWidget {
-  const HomeUI({Key? key}) : super(key: key);
+class NearbyUI extends StatefulWidget {
+  const NearbyUI({Key? key}) : super(key: key);
 
   @override
-  _HomeUIState createState() => _HomeUIState();
+  _NearbyUIState createState() => _NearbyUIState();
 }
 
-class _HomeUIState extends State<HomeUI> {
+class _NearbyUIState extends State<NearbyUI> {
   final AuthService _auth = AuthService();
 
   @override
@@ -24,7 +24,7 @@ class _HomeUIState extends State<HomeUI> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Nearby Car Parks"),
         centerTitle: true,
         backgroundColor: Colors.grey[850],
         elevation: 0.0,
@@ -125,7 +125,7 @@ class _HomeUIState extends State<HomeUI> {
                       children: <Widget>[
                         Expanded(
                           flex: 10,
-                          child: HomeNavCard(
+                          child: NavCard(
                               icon: Icon(
                                 Icons.map,
                                 color: Colors.orange[700],
@@ -138,7 +138,7 @@ class _HomeUIState extends State<HomeUI> {
                         ),
                         Expanded(
                           flex: 10,
-                          child: HomeNavCard(
+                          child: NavCard(
                               icon: Icon(
                                 Icons.favorite_border,
                                 color: Colors.orange[700],

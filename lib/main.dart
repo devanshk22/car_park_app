@@ -2,7 +2,6 @@ import 'package:car_park_app/entities/all.dart';
 import 'package:car_park_app/pages/change_password.dart';
 import 'package:car_park_app/pages/services/auth.dart';
 import 'package:car_park_app/pages/wrapper.dart';
-import 'package:car_park_app/utilities/locationMgr.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/pages/RegistrationUI.dart';
 import 'package:car_park_app/pages/SearchResultUI.dart';
@@ -13,7 +12,6 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await requestPosition();
   runApp(MyApp());
 }
 
@@ -31,7 +29,7 @@ class MyApp extends StatelessWidget {
         routes: {
           //'/': (context) => LoginUI(),
           '/bottomnavbar': (context) => myBottomNavigationBar(),
-          '/home': (context) => myBottomNavigationBar(),
+          '/nearby': (context) => myBottomNavigationBar(),
           '/info': (context) => myBottomNavigationBar(),
           '/history': (context) => myBottomNavigationBar(),
           '/favourites': (context) => myBottomNavigationBar(),

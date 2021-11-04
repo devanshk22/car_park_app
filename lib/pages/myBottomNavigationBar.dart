@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:car_park_app/pages/FavouritesUI.dart';
-import 'package:car_park_app/pages/HomeUI.dart';
+import 'package:car_park_app/pages/NearbyUI.dart';
 import 'package:car_park_app/pages/MapUI.dart';
 import 'package:car_park_app/pages/MyAccountUI.dart';
 import 'package:car_park_app/pages/SearchResultUI.dart';
@@ -13,8 +13,8 @@ class myBottomNavigationBar extends StatefulWidget {
 class _myBottomNavigationBarState extends State<myBottomNavigationBar> {
   int _selectedIndex = 0;
   final List<Widget> children = [
-    HomeUI(),
     MapUI(),
+    NearbyUI(),
     SearchResultUI(),
     FavouritesUI(),
     MyAccountUI(),
@@ -38,12 +38,12 @@ class _myBottomNavigationBarState extends State<myBottomNavigationBar> {
         onTap: onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.map),
             label: 'Map',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.directions_car),
+            label: 'Nearby',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),

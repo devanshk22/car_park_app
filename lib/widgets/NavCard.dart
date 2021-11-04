@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 
-class HomeNavCard extends StatelessWidget {
+class NavCard extends StatelessWidget {
   final Icon icon;
   final String text;
   final Widget page;
-  const HomeNavCard(
-      {required this.icon, required this.text, required this.page});
+  const NavCard({required this.icon, required this.text, required this.page});
 
   @override
   Widget build(BuildContext context) {
