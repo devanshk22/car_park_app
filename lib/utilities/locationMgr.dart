@@ -23,11 +23,20 @@ Future<Position> getPosition() async {
     return Future.error('Cannot request Location');
 }
 
-Future<List<Carpark>> getNearbyCarpark() async {
+Future<List<Carpark>> getNearbyCarparks10km() async {
   await Firebase.initializeApp();
   CarparkCtrl list = CarparkCtrl();
   Position pos = await getPosition();
   var output = await list.getNearbyAvailableCarparks(
-      latitude: pos.latitude, longitude: pos.longitude, radius: 1);
+      latitude: pos.latitude, longitude: pos.longitude, radius: 2);
+  return output;
+}
+
+Future<List<Carpark>> getNearbyCarparks100km() async {
+  await Firebase.initializeApp();
+  CarparkCtrl list = CarparkCtrl();
+  Position pos = await getPosition();
+  var output = await list.getNearbyAvailableCarparks(
+      latitude: pos.latitude, longitude: pos.longitude, radius: 3);
   return output;
 }

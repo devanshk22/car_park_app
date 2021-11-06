@@ -26,7 +26,7 @@ class _NearbyUIState extends State<NearbyUI> {
         backgroundColor: Colors.grey[850],
       ),
       body: FutureBuilder(
-        future: Future.wait([getNearbyCarpark(), getPosition()]),
+        future: Future.wait([getNearbyCarparks10km(), getPosition()]),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) {
             return Padding(

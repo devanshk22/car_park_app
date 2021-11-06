@@ -23,7 +23,7 @@ class _FavouritesUIState extends State<FavouritesUI> {
         backgroundColor: Colors.grey[850],
       ),
       body: FutureBuilder(
-        future: Future.wait([getNearbyCarpark(), getPosition()]),
+        future: Future.wait([getNearbyCarparks100km(), getPosition()]),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) {
             return Padding(
