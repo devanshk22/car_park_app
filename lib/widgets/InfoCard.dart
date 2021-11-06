@@ -1,5 +1,5 @@
 import 'package:car_park_app/entities/all.dart';
-import 'package:car_park_app/pages/MapUI.dart';
+import 'package:car_park_app/pages/myBottomNavigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 
@@ -167,7 +167,8 @@ Car Park Basement: ${widget.carpark.carparkBasement}
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MapUI()),
+                          MaterialPageRoute(
+                              builder: (context) => myBottomNavigationBar()),
                         );
                       },
                       label: Text('View Map',
