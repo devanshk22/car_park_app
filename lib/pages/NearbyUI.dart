@@ -1,13 +1,10 @@
-import 'package:car_park_app/pages/FavouritesUI.dart';
 import 'package:car_park_app/utilities/favouritesMgr.dart';
 import 'package:car_park_app/utilities/locationMgr.dart';
-import 'package:car_park_app/widgets/NavCard.dart';
 import 'package:flutter/material.dart';
 import 'package:car_park_app/constants/app_constants.dart';
 import 'package:car_park_app/pages/services/auth.dart';
 import 'package:car_park_app/widgets/CarparkCard.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'MapUI.dart';
 
 class NearbyUI extends StatefulWidget {
   const NearbyUI({Key? key}) : super(key: key);
@@ -27,16 +24,6 @@ class _NearbyUIState extends State<NearbyUI> {
         title: Text("Nearby Car Parks"),
         centerTitle: true,
         backgroundColor: Colors.grey[850],
-        elevation: 0.0,
-        actions: <Widget>[
-          TextButton.icon(
-              onPressed: () async {
-                await _auth.signOut();
-              },
-              icon: Icon(Icons.person),
-              label: Text("Log Out"))
-        ],
-        automaticallyImplyLeading: false,
       ),
       body: FutureBuilder(
         future: Future.wait([getNearbyCarpark(), getPosition()]),
@@ -117,38 +104,6 @@ class _NearbyUIState extends State<NearbyUI> {
               physics: ScrollPhysics(),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(
-                        screenGap, 2 * cardGap, screenGap, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 10,
-                          child: NavCard(
-                              icon: Icon(
-                                Icons.map,
-                                color: Colors.orange[700],
-                              ),
-                              text: 'Open Map',
-                              page: MapUI()),
-                        ),
-                        Spacer(
-                          flex: 1,
-                        ),
-                        Expanded(
-                          flex: 10,
-                          child: NavCard(
-                              icon: Icon(
-                                Icons.favorite_border,
-                                color: Colors.orange[700],
-                              ),
-                              text: 'My Favourites',
-                              page: FavouritesUI()),
-                        )
-                      ],
-                    ),
-                  ),
                   Container(
                     alignment: Alignment.bottomLeft,
                     padding: EdgeInsets.fromLTRB(
