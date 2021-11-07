@@ -116,15 +116,24 @@ class _ChangePasswordState extends State<ChangePassword> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
-                    passwordValidated = await validatePassword(oldPassword);
+                    bool validated = await validatePassword(oldPassword);
+                    setState(() async {
+                      passwordValidated = validated;
+                    });
+
                     if (_formKey.currentState!.validate()) {
                       if (!passwordValidated) {
                         setState(() => error = 'Incorrect Password');
                       }
                       if (newPassword != confirmNewPassword) {
                         setState(() => error = 'Passwords do not match');
-                      } else {
+                      }
+                      if (passwordValidated &&
+                          newPassword == confirmNewPassword) {
+                        print("Changing password");
                         user!.updatePassword(newPassword);
+                        setState(
+                            () => error = 'Password successfully changed!');
                       }
                     }
                   },
@@ -135,7 +144,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                 Text(
                   error,
                   style: TextStyle(
-                    color: Colors.red,
+                    color: error == 'Password successfully changed!'
+                        ? Colors.green
+                        : Colors.red,
                     fontSize: 14.0,
                   ),
                 )
