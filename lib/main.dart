@@ -3,7 +3,6 @@ import 'package:car_park_app/pages/change_password.dart';
 import 'package:car_park_app/pages/services/auth.dart';
 import 'package:car_park_app/pages/wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:car_park_app/pages/RegistrationUI.dart';
 import 'package:car_park_app/pages/SearchResultUI.dart';
 import 'package:car_park_app/pages/myBottomNavigationBar.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,7 +34,6 @@ class MyApp extends StatelessWidget {
           '/favourites': (context) => myBottomNavigationBar(),
           '/myaccount': (context) => myBottomNavigationBar(),
           '/map': (context) => myBottomNavigationBar(),
-          '/registration': (context) => RegistrationUI(),
           '/searchresult': (context) => SearchResultUI(),
           '/wrapper': (context) => Wrapper(),
           '/changepassword': (context) => ChangePassword(),
