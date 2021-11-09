@@ -28,7 +28,7 @@ Future<List<Carpark>> getNearbyCarparks10km() async {
   CarparkCtrl list = CarparkCtrl();
   Position pos = await getPosition();
   var output = await list.getNearbyAvailableCarparks(
-      latitude: pos.latitude, longitude: pos.longitude, radius: 2);
+      latitude: pos.latitude, longitude: pos.longitude, radius: 1);
   return output;
 }
 
@@ -37,6 +37,6 @@ Future<List<Carpark>> getNearbyCarparks100km() async {
   CarparkCtrl list = CarparkCtrl();
   Position pos = await getPosition();
   var output = await list.getNearbyAvailableCarparks(
-      latitude: pos.latitude, longitude: pos.longitude, radius: 3);
+      latitude: pos.latitude, longitude: pos.longitude, radius: 1);
   return output;
 }
