@@ -55,6 +55,7 @@ class _MapUIState extends State<MapUI> {
           return GoogleMap(
             initialCameraPosition: _initialCameraPosition,
             onMapCreated: _onMapCreated,
+            myLocationEnabled: true,
             myLocationButtonEnabled: false,
             markers: Set<Marker>.of(markers),
           );
